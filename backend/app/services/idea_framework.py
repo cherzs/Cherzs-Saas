@@ -105,153 +105,159 @@ class IdeaFrameworkService:
             return self._generate_automation_idea(problem, industry)
         else:
             return self._generate_generic_idea(problem, industry)
-    
+
     def _generate_unbundle_idea(self, problem: Dict, industry: str = None) -> Dict:
-        """Generate unbundling idea"""
-        giants = {
-            "e-commerce": ["Shopify", "WooCommerce", "Magento"],
-            "marketing": ["HubSpot", "Mailchimp", "Constant Contact"],
-            "crm": ["Salesforce", "HubSpot CRM", "Pipedrive"],
-            "analytics": ["Google Analytics", "Mixpanel", "Amplitude"],
-            "productivity": ["Notion", "Asana", "Trello"]
-        }
+        """Generate idea using 'Unbundle a Giant' framework"""
+        problem_title = problem.get("title", "")
+        problem_desc = problem.get("description", "")
         
-        category = problem.get('category', 'general')
-        giants_list = giants.get(category, ["Generic Platform"])
-        giant = giants_list[0]
+        # Extract key problem words
+        problem_words = problem_title.lower().split()[:3]
         
-        return {
-            "title": f"Specialized {giant} Alternative",
-            "description": f"Create a focused alternative to {giant} that specifically addresses: {problem['title']}",
-            "target_audience": f"Users frustrated with {giant}'s complexity or pricing",
+        idea = {
+            "title": f"Simple{problem_words[0].title()} - {problem_words[0].title()} for Small Teams",
+            "description": f"A simplified {problem_words[0]} platform designed specifically for small businesses. Focuses on ease of use and affordability while providing essential features.",
+            "target_audience": "Small businesses and startups",
             "monetization_model": "Subscription-based with tiered pricing",
             "tech_stack": ["React", "Node.js", "PostgreSQL", "AWS"],
             "market_size": "Medium (niche but growing)",
             "competition_level": "medium",
             "key_features": [
-                "Simplified interface",
-                "Lower pricing",
-                "Better customer support",
-                "Industry-specific features"
-            ],
-            "framework_type": "unbundle"
+                "Easy setup and onboarding",
+                "Essential features only",
+                "Affordable pricing",
+                "Great customer support"
+            ]
         }
-    
+        
+        return idea
+
     def _generate_niche_idea(self, problem: Dict, industry: str = None) -> Dict:
-        """Generate niche-specific idea"""
-        niches = {
-            "real-estate": "Real Estate",
-            "healthcare": "Healthcare",
-            "education": "Education",
-            "finance": "Finance",
-            "legal": "Legal Services",
-            "restaurant": "Restaurant",
-            "fitness": "Fitness"
-        }
+        """Generate idea using 'Pick a Niche' framework"""
+        problem_title = problem.get("title", "")
+        industry = industry or "general"
         
-        target_industry = industry or problem.get('category', 'general')
-        niche_name = niches.get(target_industry, "Specialized Industry")
-        
-        return {
-            "title": f"{niche_name} Management Platform",
-            "description": f"Comprehensive solution for {niche_name.lower()} businesses to solve: {problem['title']}",
-            "target_audience": f"Small to medium {niche_name.lower()} businesses",
-            "monetization_model": "Monthly subscription with industry-specific pricing",
+        idea = {
+            "title": f"{industry.title()}Flow - {problem_title.split()[0].title()} for {industry.title()}",
+            "description": f"{problem_title.split()[0].title()} tool built specifically for {industry} businesses with industry-specific features and workflows.",
+            "target_audience": f"{industry.title()} businesses and professionals",
+            "monetization_model": "Monthly subscription per user",
             "tech_stack": ["React", "Python FastAPI", "PostgreSQL", "Stripe"],
             "market_size": "Small but loyal",
             "competition_level": "low",
             "key_features": [
-                "Industry-specific workflows",
+                f"{industry.title()}-specific features",
+                "Industry templates",
                 "Compliance features",
-                "Integration with industry tools",
-                "Specialized reporting"
-            ],
-            "framework_type": "niche"
+                "Industry integrations"
+            ]
         }
-    
-    def _generate_api_idea(self, problem: Dict, industry: str = None) -> Dict:
-        """Generate API-as-service idea"""
-        api_ideas = [
-            "Identity Verification API",
-            "Address Validation API",
-            "Document Processing API",
-            "Payment Processing API",
-            "Email Validation API",
-            "Phone Number Verification API"
-        ]
         
-        return {
-            "title": "Specialized API Service",
-            "description": f"API service that solves: {problem['title']}",
-            "target_audience": "Developers and businesses needing specific functionality",
-            "monetization_model": "Usage-based pricing with API calls",
+        return idea
+
+    def _generate_api_idea(self, problem: Dict, industry: str = None) -> Dict:
+        """Generate idea using 'API as a Service' framework"""
+        problem_title = problem.get("title", "")
+        
+        idea = {
+            "title": f"{problem_title.split()[0].title()}API - {problem_title.split()[0].title()} as a Service",
+            "description": f"Simple API that provides {problem_title.split()[0]} functionality. Easy to integrate and use for developers.",
+            "target_audience": "Developers and technical teams",
+            "monetization_model": "Usage-based pricing",
             "tech_stack": ["Python FastAPI", "Redis", "PostgreSQL", "Docker"],
-            "market_size": "Growing developer market",
+            "market_size": "Medium (developer tools)",
             "competition_level": "medium",
             "key_features": [
                 "RESTful API",
                 "Comprehensive documentation",
-                "SDKs for multiple languages",
-                "Usage analytics dashboard"
-            ],
-            "framework_type": "api"
+                "Multiple SDKs",
+                "Usage analytics"
+            ]
         }
-    
+        
+        return idea
+
     def _generate_automation_idea(self, problem: Dict, industry: str = None) -> Dict:
-        """Generate automation idea"""
-        return {
-            "title": "Workflow Automation Tool",
-            "description": f"Automate processes related to: {problem['title']}",
-            "target_audience": "Businesses looking to reduce manual work",
-            "monetization_model": "Tiered subscription based on automation volume",
-            "tech_stack": ["React", "Node.js", "PostgreSQL", "Zapier-like integrations"],
-            "market_size": "Large automation market",
+        """Generate idea using 'Automation Tool' framework"""
+        problem_title = problem.get("title", "")
+        
+        idea = {
+            "title": f"Auto{problem_title.split()[0].title()} - {problem_title.split()[0].title()} Automation",
+            "description": f"Automate {problem_title.split()[0]} tasks and workflows. Save time and reduce manual work.",
+            "target_audience": "Businesses and professionals",
+            "monetization_model": "Subscription-based SaaS",
+            "tech_stack": ["React", "Python", "PostgreSQL", "Zapier API"],
+            "market_size": "Large and growing",
             "competition_level": "high",
             "key_features": [
-                "Drag-and-drop workflow builder",
-                "Pre-built templates",
-                "Integration marketplace",
+                "Workflow automation",
+                "Integration capabilities",
+                "Scheduling and triggers",
                 "Analytics and reporting"
-            ],
-            "framework_type": "automation"
+            ]
         }
-    
+        
+        return idea
+
     def _generate_generic_idea(self, problem: Dict, industry: str = None) -> Dict:
-        """Generate generic idea"""
-        return {
-            "title": f"Solution for {problem['title']}",
-            "description": f"Comprehensive solution addressing: {problem['description']}",
-            "target_audience": "Businesses facing this specific problem",
-            "monetization_model": "Subscription-based SaaS",
+        """Generate generic idea when framework is not recognized"""
+        problem_title = problem.get("title", "")
+        
+        idea = {
+            "title": f"Smart{problem_title.split()[0].title()} - {problem_title.split()[0].title()} Solution",
+            "description": f"Intelligent solution for {problem_title.lower()}. Uses modern technology to solve the problem effectively.",
+            "target_audience": "General business users",
+            "monetization_model": "Subscription-based",
             "tech_stack": ["React", "Python FastAPI", "PostgreSQL", "AWS"],
             "market_size": "To be determined",
-            "competition_level": "unknown",
+            "competition_level": "medium",
             "key_features": [
-                "Core problem-solving features",
-                "User-friendly interface",
-                "Analytics and reporting",
-                "Integration capabilities"
-            ],
-            "framework_type": "generic"
+                "Modern interface",
+                "Cloud-based",
+                "Mobile responsive",
+                "24/7 support"
+            ]
         }
+        
+        return idea
     
     def _parse_ai_response(self, content: str, framework_type: str, problem: Dict) -> Dict:
-        """Parse AI response (simplified)"""
+        """Parse AI response and extract idea details"""
         try:
-            # This is a simplified parser - in production you'd use proper JSON parsing
-            return {
-                "title": f"AI-Generated {framework_type.title()} Solution",
-                "description": content[:200] + "...",
-                "target_audience": "AI-determined audience",
-                "monetization_model": "Subscription-based",
-                "tech_stack": ["React", "Python", "PostgreSQL"],
-                "market_size": "AI-estimated",
+            # Simple parsing - in production you'd use more sophisticated parsing
+            lines = content.split('\n')
+            idea = {
+                "title": f"AI Generated {framework_type.title()} Solution",
+                "description": f"AI-generated solution for: {problem.get('title', 'Unknown problem')}",
+                "target_audience": "Business users",
+                "monetization_model": "Subscription-based SaaS",
+                "tech_stack": ["React", "Python FastAPI", "PostgreSQL", "AWS"],
+                "market_size": "To be determined",
                 "competition_level": "medium",
-                "key_features": ["AI-generated features"],
-                "framework_type": framework_type
+                "key_features": [
+                    "AI-powered solution",
+                    "Modern interface",
+                    "Cloud-based",
+                    "Scalable architecture"
+                ]
             }
-        except:
-            return self._generate_manually(framework_type, problem)
+            
+            # Try to extract more details from AI response
+            for line in lines:
+                line = line.strip()
+                if line.startswith("title:"):
+                    idea["title"] = line.replace("title:", "").strip()
+                elif line.startswith("description:"):
+                    idea["description"] = line.replace("description:", "").strip()
+                elif line.startswith("target_audience:"):
+                    idea["target_audience"] = line.replace("target_audience:", "").strip()
+                elif line.startswith("monetization_model:"):
+                    idea["monetization_model"] = line.replace("monetization_model:", "").strip()
+            
+            return idea
+        except Exception as e:
+            print(f"Error parsing AI response: {e}")
+            return self._generate_generic_idea(problem)
     
     def get_available_frameworks(self) -> Dict:
         """Get list of available frameworks"""
@@ -259,22 +265,84 @@ class IdeaFrameworkService:
     
     async def analyze_competition(self, idea: Dict) -> Dict:
         """Analyze competition for an idea"""
-        # TODO: Implement actual competition analysis
-        # This would integrate with tools like SimilarWeb, SEMrush, etc.
-        return {
-            "competitor_count": "0-5 competitors",
-            "market_saturation": "Low",
-            "entry_barriers": "Low",
-            "differentiation_opportunities": "High"
-        }
-    
+        try:
+            # Analyze competition based on idea
+            title = idea.get("title", "").lower()
+            description = idea.get("description", "").lower()
+            
+            # Simple competition analysis
+            competition_level = "medium"
+            if any(word in title for word in ["simple", "easy", "affordable"]):
+                competition_level = "low"
+            elif any(word in title for word in ["enterprise", "advanced", "complex"]):
+                competition_level = "high"
+            
+            analysis = {
+                "idea_id": idea.get("id", "unknown"),
+                "competition_level": competition_level,
+                "market_saturation": "Medium",
+                "key_competitors": [
+                    "Established players in the space",
+                    "Emerging startups",
+                    "Open source alternatives"
+                ],
+                "competitive_advantages": [
+                    "Simpler user experience",
+                    "Lower pricing",
+                    "Better integration"
+                ],
+                "market_gaps": [
+                    "Complex existing solutions",
+                    "High pricing",
+                    "Poor user experience"
+                ],
+                "recommendations": [
+                    "Focus on differentiation",
+                    "Target underserved segments",
+                    "Build strong user experience"
+                ]
+            }
+            
+            return analysis
+        except Exception as e:
+            print(f"Error analyzing competition: {e}")
+            return {"error": str(e)}
+
     async def estimate_market_size(self, idea: Dict) -> Dict:
         """Estimate market size for an idea"""
-        # TODO: Implement actual market size estimation
-        # This would use data from sources like Statista, industry reports, etc.
-        return {
-            "total_addressable_market": "$10M - $50M",
-            "serviceable_market": "$1M - $5M",
-            "obtainable_market": "$100K - $500K",
-            "growth_rate": "10-20% annually"
-        } 
+        try:
+            # Estimate market size based on idea
+            title = idea.get("title", "").lower()
+            description = idea.get("description", "").lower()
+            
+            # Simple market size estimation
+            if any(word in title for word in ["enterprise", "large", "global"]):
+                market_size = "Large ($100M+ TAM)"
+                obtainable_market = "$10M - $50M"
+            elif any(word in title for word in ["small", "niche", "specific"]):
+                market_size = "Small ($10M - $50M TAM)"
+                obtainable_market = "$1M - $10M"
+            else:
+                market_size = "Medium ($50M - $100M TAM)"
+                obtainable_market = "$5M - $20M"
+            
+            estimate = {
+                "idea_id": idea.get("id", "unknown"),
+                "total_addressable_market": market_size,
+                "obtainable_market": obtainable_market,
+                "target_customer_segments": [
+                    "Small businesses",
+                    "Startups",
+                    "Freelancers"
+                ],
+                "market_growth_rate": "15-20% annually",
+                "market_maturity": "Growing",
+                "geographic_focus": "Global",
+                "pricing_potential": "$10-50/month per user",
+                "customer_lifetime_value": "$500-2000"
+            }
+            
+            return estimate
+        except Exception as e:
+            print(f"Error estimating market size: {e}")
+            return {"error": str(e)} 

@@ -10,48 +10,6 @@ router = APIRouter(prefix="/validation", tags=["validation"])
 # Initialize service
 validation_service = ValidationToolkitService()
 
-# Mock data for development
-MOCK_VALIDATIONS = [
-    {
-        "id": "1",
-        "idea_id": "1",
-        "validation_type": "survey",
-        "status": "completed",
-        "results": {
-            "total_responses": 45,
-            "completion_rate": 0.85,
-            "avg_willingness_to_pay": 3.8,
-            "problem_frequency": 4.2
-        },
-        "created_at": "2024-01-15T10:30:00Z"
-    },
-    {
-        "id": "2",
-        "idea_id": "2",
-        "validation_type": "landing_page",
-        "status": "active",
-        "results": {
-            "total_visitors": 120,
-            "email_signups": 18,
-            "conversion_rate": 0.15,
-            "bounce_rate": 0.35
-        },
-        "created_at": "2024-01-14T15:45:00Z"
-    },
-    {
-        "id": "3",
-        "idea_id": "3",
-        "validation_type": "market_research",
-        "status": "pending",
-        "results": {
-            "competitor_analysis": "In progress",
-            "market_size_estimate": "Pending",
-            "trend_analysis": "Pending"
-        },
-        "created_at": "2024-01-13T09:20:00Z"
-    }
-]
-
 @router.post("/surveys/create")
 async def create_survey(
     survey_type: str = Body(..., description="Type of survey to create"),
@@ -60,24 +18,23 @@ async def create_survey(
 ):
     """Create a validation survey"""
     try:
-        # Create a new validation entry
-        new_validation = {
+        # Create survey using validation service
+        survey = await validation_service.create_survey(survey_type, idea, custom_questions)
+        
+        # Add metadata
+        survey_with_metadata = {
             "id": str(uuid.uuid4()),
             "idea_id": idea.get("id", "unknown"),
             "validation_type": "survey",
             "status": "active",
-            "results": {
-                "total_responses": 0,
-                "completion_rate": 0.0,
-                "avg_willingness_to_pay": 0,
-                "problem_frequency": 0
-            },
-            "created_at": datetime.now().isoformat()
+            "survey_type": survey_type,
+            "created_at": datetime.now().isoformat(),
+            "survey_data": survey
         }
         
         return {
             "success": True,
-            "data": new_validation
+            "data": survey_with_metadata
         }
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -87,25 +44,14 @@ async def create_survey(
 @router.get("/surveys/templates")
 async def get_survey_templates():
     """Get available survey templates"""
-    templates = {
-        "problem_validation": {
-            "name": "Problem Validation Survey",
-            "description": "Validate if the problem you're solving is real and painful",
-            "questions_count": 4,
-            "estimated_time": "2-3 minutes"
-        },
-        "solution_validation": {
-            "name": "Solution Validation Survey", 
-            "description": "Validate if your solution addresses the problem effectively",
-            "questions_count": 4,
-            "estimated_time": "3-4 minutes"
+    try:
+        templates = await validation_service.get_survey_templates()
+        return {
+            "success": True,
+            "data": templates
         }
-    }
-    
-    return {
-        "success": True,
-        "data": templates
-    }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/landing-pages/create")
 async def create_landing_page(
@@ -113,26 +59,29 @@ async def create_landing_page(
     idea: Dict = Body(..., description="Idea to create landing page for"),
     custom_content: Optional[Dict] = Body(None, description="Custom content to override defaults")
 ):
-    """Create a landing page for idea validation"""
+    """Create a landing page for validation"""
     try:
-        # Create a new validation entry
-        new_validation = {
+        # Create landing page using validation service
+        landing_page = await validation_service.create_landing_page(template_type, idea, custom_content)
+        
+        # Deploy landing page to serverless storage
+        deployment_result = await validation_service.deploy_landing_page(landing_page, idea)
+        
+        # Add metadata
+        landing_page_with_metadata = {
             "id": str(uuid.uuid4()),
             "idea_id": idea.get("id", "unknown"),
             "validation_type": "landing_page",
             "status": "active",
-            "results": {
-                "total_visitors": 0,
-                "email_signups": 0,
-                "conversion_rate": 0.0,
-                "bounce_rate": 0.0
-            },
-            "created_at": datetime.now().isoformat()
+            "template_type": template_type,
+            "created_at": datetime.now().isoformat(),
+            "landing_page_data": landing_page,
+            "deployment": deployment_result
         }
         
         return {
             "success": True,
-            "data": new_validation
+            "data": landing_page_with_metadata
         }
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -142,64 +91,47 @@ async def create_landing_page(
 @router.get("/landing-pages/templates")
 async def get_landing_page_templates():
     """Get available landing page templates"""
-    templates = {
-        "coming_soon": {
-            "name": "Coming Soon",
-            "description": "Simple coming soon page to collect email signups",
-            "best_for": "Early validation and building waitlist"
-        },
-        "problem_solution": {
-            "name": "Problem-Solution",
-            "description": "Focus on the problem and how you solve it",
-            "best_for": "Validating problem-solution fit"
-        },
-        "feature_focused": {
-            "name": "Feature-Focused",
-            "description": "Highlight key features and benefits",
-            "best_for": "Validating feature demand"
+    try:
+        templates = await validation_service.get_landing_page_templates()
+        return {
+            "success": True,
+            "data": templates
         }
-    }
-    
-    return {
-        "success": True,
-        "data": templates
-    }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/market-signals")
 async def get_market_signals(idea: Dict = Body(..., description="Idea to analyze")):
     """Get market signals for an idea"""
     try:
-        signals = await validation_service.get_market_signals(idea)
-        
+        market_signals = await validation_service.get_market_signals(idea)
         return {
             "success": True,
-            "data": signals
+            "data": market_signals
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/keyword-analysis")
 async def analyze_keywords(idea: Dict = Body(..., description="Idea to analyze")):
-    """Analyze keywords for SEO and marketing"""
+    """Analyze keywords for an idea"""
     try:
-        analysis = await validation_service.analyze_keywords(idea)
-        
+        keyword_analysis = await validation_service.analyze_keywords(idea)
         return {
             "success": True,
-            "data": analysis
+            "data": keyword_analysis
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/validation-plan")
 async def generate_validation_plan(idea: Dict = Body(..., description="Idea to create plan for")):
-    """Generate a comprehensive validation plan"""
+    """Generate a validation plan for an idea"""
     try:
-        plan = await validation_service.generate_validation_plan(idea)
-        
+        validation_plan = await validation_service.generate_validation_plan(idea)
         return {
             "success": True,
-            "data": plan
+            "data": validation_plan
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -210,13 +142,19 @@ async def track_conversion(
     event_type: str = Body(..., description="Type of conversion event"),
     data: Optional[Dict] = Body(None, description="Additional event data")
 ):
-    """Track conversion metrics for landing pages"""
+    """Track conversion events from landing pages"""
     try:
-        event = await validation_service.track_conversion_metrics(landing_page_id, event_type, data)
+        # Track conversion event
+        tracking_result = await validation_service.track_conversion(landing_page_id, event_type, data)
         
         return {
             "success": True,
-            "data": event
+            "data": {
+                "landing_page_id": landing_page_id,
+                "event_type": event_type,
+                "tracked_at": datetime.now().isoformat(),
+                "tracking_result": tracking_result
+            }
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -229,11 +167,13 @@ async def generate_validation_report(
 ):
     """Generate a comprehensive validation report"""
     try:
-        report = await validation_service.generate_validation_report(idea, survey_results, landing_page_metrics)
+        validation_report = await validation_service.generate_validation_report(
+            idea, survey_results, landing_page_metrics
+        )
         
         return {
             "success": True,
-            "data": report
+            "data": validation_report
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -242,29 +182,7 @@ async def generate_validation_report(
 async def get_landing_page_metrics(landing_page_id: str):
     """Get metrics for a specific landing page"""
     try:
-        # Find validation in mock data
-        validation = next((v for v in MOCK_VALIDATIONS if v["id"] == landing_page_id), None)
-        
-        if not validation:
-            raise HTTPException(status_code=404, detail="Landing page not found")
-        
-        metrics = {
-            "landing_page_id": landing_page_id,
-            "total_visitors": validation["results"].get("total_visitors", 0),
-            "unique_visitors": validation["results"].get("total_visitors", 0),
-            "email_signups": validation["results"].get("email_signups", 0),
-            "conversion_rate": validation["results"].get("conversion_rate", 0.0),
-            "bounce_rate": validation["results"].get("bounce_rate", 0.0),
-            "avg_time_on_page": 120,
-            "traffic_sources": {
-                "direct": 40,
-                "social": 30,
-                "search": 20,
-                "referral": 10
-            },
-            "events": []
-        }
-        
+        metrics = await validation_service.get_landing_page_metrics(landing_page_id)
         return {
             "success": True,
             "data": metrics
@@ -276,28 +194,67 @@ async def get_landing_page_metrics(landing_page_id: str):
 async def get_survey_results(survey_id: str):
     """Get results for a specific survey"""
     try:
-        # Find validation in mock data
-        validation = next((v for v in MOCK_VALIDATIONS if v["id"] == survey_id), None)
-        
-        if not validation:
-            raise HTTPException(status_code=404, detail="Survey not found")
-        
-        results = {
-            "survey_id": survey_id,
-            "total_responses": validation["results"].get("total_responses", 0),
-            "completion_rate": validation["results"].get("completion_rate", 0.0),
-            "avg_completion_time": 180,
-            "responses": [],
-            "insights": [
-                "Most users find the problem significant",
-                "Willingness to pay is moderate to high",
-                "Users prefer simple, affordable solutions"
-            ]
-        }
-        
+        results = await validation_service.get_survey_results(survey_id)
         return {
             "success": True,
             "data": results
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/surveys/submit-response")
+async def submit_survey_response(
+    survey_id: str = Body(..., description="Survey ID"),
+    responses: Dict = Body(..., description="Survey responses"),
+    respondent_info: Optional[Dict] = Body(None, description="Respondent information")
+):
+    """Submit survey response and calculate metrics"""
+    try:
+        # Process survey response
+        processed_response = await validation_service.process_survey_response(
+            survey_id, responses, respondent_info
+        )
+        
+        # Calculate updated metrics
+        updated_metrics = await validation_service.calculate_survey_metrics(survey_id)
+        
+        # Update validation results in database
+        await validation_service.update_validation_results(survey_id, updated_metrics)
+        
+        return {
+            "success": True,
+            "data": {
+                "survey_id": survey_id,
+                "response_processed": True,
+                "updated_metrics": updated_metrics
+            }
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/surveys/{survey_id}/metrics")
+async def get_survey_metrics(survey_id: str):
+    """Get real-time survey metrics"""
+    try:
+        metrics = await validation_service.get_survey_metrics(survey_id)
+        return {
+            "success": True,
+            "data": metrics
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/surveys/{survey_id}/export")
+async def export_survey_data(
+    survey_id: str,
+    format: str = Body("csv", description="Export format (csv, json, excel)")
+):
+    """Export survey data and results"""
+    try:
+        export_data = await validation_service.export_survey_data(survey_id, format)
+        return {
+            "success": True,
+            "data": export_data
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e)) 

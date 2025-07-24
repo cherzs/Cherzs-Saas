@@ -1,0 +1,614 @@
+[
+  {
+    "id": "a3547878-2d56-4463-832b-d9bc88fe569c",
+    "title": "Customer support software is too expensive for startups",
+    "description": "Startups need customer support tools but can't afford the enterprise pricing of existing solutions. There's a gap in the market for affordable, simple support software.",
+    "source": "g2",
+    "source_url": "https://g2.com/categories/customer-support",
+    "category": "customer-support",
+    "severity_score": 9.2,
+    "mention_count": 31,
+    "keywords": [
+      "customer",
+      "support",
+      "expensive",
+      "startups",
+      "affordable"
+    ],
+    "created_at": "2025-07-24T14:35:27.453026"
+  },
+  {
+    "id": "cf9bfd9d-c855-43c1-8c0c-417d6727814f",
+    "title": "Show HN: The missing link of a bookstore's tech stack",
+    "description": "Hi HN!<p>I built Bookhead because I used to work as a bookseller and I wasn&#x27;t happy with the software options when I decided to sell my own collection online (with the hopes of one day growing so I can open my own brick &amp; mortar). So I decided to make my own bookselling app...a classic hacker distraction.<p>Bookhead has two main parts: 1. an inventory management app that allows a bookseller to list their books anywhere they want to sell books (like Squarespace, Biblio, eBay, Shopify (co...",
+    "source": "hackernews",
+    "source_url": "https://bookhead.net/",
+    "category": "e-commerce",
+    "severity_score": 9.099898358234356,
+    "mention_count": 86,
+    "keywords": [
+      "booksellers",
+      "problem",
+      "that",
+      "might",
+      "providers",
+      "should",
+      "fragmented",
+      "valuable",
+      "squarespace",
+      "decided"
+    ],
+    "created_at": "2025-07-23T23:04:30"
+  },
+  {
+    "id": "3c80db8e-0d94-4d6c-bb22-2a8069ea6b5b",
+    "title": "Inventory management is complex for multi-location businesses",
+    "description": "Businesses with multiple locations struggle to track inventory across sites. Current solutions are either too basic or enterprise-level expensive.",
+    "source": "g2",
+    "source_url": "https://g2.com/categories/inventory-management",
+    "category": "e-commerce",
+    "severity_score": 8.7,
+    "mention_count": 34,
+    "keywords": [
+      "inventory",
+      "management",
+      "multi-location",
+      "tracking",
+      "expensive"
+    ],
+    "created_at": "2025-07-24T14:35:27.453051"
+  },
+  {
+    "id": "5e0600dd-9a7d-4d0c-987e-00f4cbd9b1a4",
+    "title": "Email marketing automation is too complex",
+    "description": "Small businesses struggle with setting up email marketing automation. The current tools are either too complex or too expensive for small teams.",
+    "source": "reddit",
+    "source_url": "https://reddit.com/r/marketing/comments/example1",
+    "category": "marketing",
+    "severity_score": 8.5,
+    "mention_count": 15,
+    "keywords": [
+      "email",
+      "marketing",
+      "automation",
+      "complex",
+      "expensive"
+    ],
+    "created_at": "2025-07-24T14:35:27.453002"
+  },
+  {
+    "id": "f6ed9eae-aaa7-40a6-9aac-2d036b09123c",
+    "title": "Invoice generation takes too much manual work",
+    "description": "Small businesses spend hours manually creating invoices. They need automated invoice generation that integrates with their existing tools.",
+    "source": "hackernews",
+    "source_url": "https://news.ycombinator.com/item?id=example4",
+    "category": "finance",
+    "severity_score": 8.0,
+    "mention_count": 18,
+    "keywords": [
+      "invoice",
+      "generation",
+      "manual",
+      "automation",
+      "integration"
+    ],
+    "created_at": "2025-07-24T14:35:27.453037"
+  },
+  {
+    "id": "30fb8161-9a94-47a4-af41-d1996a9bb458",
+    "title": "API documentation tools are outdated and hard to maintain",
+    "description": "Developers struggle with keeping API documentation up-to-date. They need automated documentation generation from code.",
+    "source": "hackernews",
+    "source_url": "https://news.ycombinator.com/item?id=example8",
+    "category": "developer-tools",
+    "severity_score": 7.9,
+    "mention_count": 52,
+    "keywords": [
+      "API",
+      "documentation",
+      "outdated",
+      "automated",
+      "maintenance"
+    ],
+    "created_at": "2025-07-24T14:35:27.453060"
+  },
+  {
+    "id": "8fb06147-6e1a-474d-8902-11041934cc0c",
+    "title": "Project management tools don't work for remote teams",
+    "description": "Existing project management tools don't account for the unique challenges of remote work. Teams need better collaboration features and time tracking.",
+    "source": "hackernews",
+    "source_url": "https://news.ycombinator.com/item?id=example2",
+    "category": "productivity",
+    "severity_score": 7.8,
+    "mention_count": 23,
+    "keywords": [
+      "project",
+      "management",
+      "remote",
+      "collaboration",
+      "tracking"
+    ],
+    "created_at": "2025-07-24T14:35:27.453021"
+  },
+  {
+    "id": "7a647bec-482c-4edc-81b9-5bca6d9b04cb",
+    "title": "Analytics dashboards are overwhelming for non-technical users",
+    "description": "Business users need analytics but find current dashboards too complex. They need simple, actionable insights without the technical complexity.",
+    "source": "reddit",
+    "source_url": "https://reddit.com/r/analytics/comments/example3",
+    "category": "analytics",
+    "severity_score": 7.5,
+    "mention_count": 12,
+    "keywords": [
+      "analytics",
+      "dashboards",
+      "complex",
+      "non-technical",
+      "insights"
+    ],
+    "created_at": "2025-07-24T14:35:27.453031"
+  },
+  {
+    "id": "e20c231c-eff8-466c-8fac-d2e2610adf05",
+    "title": "Code review process is inefficient for large teams",
+    "description": "Development teams waste time on manual code reviews. They need intelligent code analysis and automated review suggestions.",
+    "source": "hackernews",
+    "source_url": "https://news.ycombinator.com/item?id=example6",
+    "category": "developer-tools",
+    "severity_score": 7.2,
+    "mention_count": 45,
+    "keywords": [
+      "code",
+      "review",
+      "inefficient",
+      "automated",
+      "analysis"
+    ],
+    "created_at": "2025-07-24T14:35:27.453046"
+  },
+  {
+    "id": "69bde222-35c9-4ffe-b0b7-ef5acb132b9b",
+    "title": "Show HN: TheProtector \u2013 Linux Bash script for the paranoid admin on a budget",
+    "description": "Hi HN,<p>I spent the past year building this in my spare time because I got tired of enterprise security tools that cost $50K&#x2F;year and don&#x27;t understand Linux.<p>TheProtector is a comprehensive security monitoring tool that actually runs on the systems we use (Linux) instead of being a Windows-first afterthought. Built it entirely on a $500 laptop because I believe good security shouldn&#x27;t require unlimited budgets.<p>Features:\n- Real-time process, network, and file monitoring\n- YAR...",
+    "source": "hackernews",
+    "source_url": "https://github.com/IHATEGIVINGAUSERNAME/theProtector",
+    "category": "finance",
+    "severity_score": 6.9877047737787645,
+    "mention_count": 122,
+    "keywords": [
+      "might",
+      "that",
+      "catches",
+      "behavioral",
+      "year",
+      "ihategivingausername",
+      "evasion",
+      "understand",
+      "baseline",
+      "flawless"
+    ],
+    "created_at": "2025-07-24T01:37:48"
+  },
+  {
+    "id": "da0e26f0-0eda-436b-9eff-3906bf91dead",
+    "title": "Show HN: Duende: Web UX for guiding Gemini as it improves your source code",
+    "description": "I wrote a simple web UX in Python&#x2F;JavaScript that spawns a conversation with Google Gemini with MCP commands that let it work on a specific coding task that you specify: <a href=\"http:&#x2F;&#x2F;github.com&#x2F;alefore&#x2F;duende\">http:&#x2F;&#x2F;github.com&#x2F;alefore&#x2F;duende</a><p>The UX lets you observe the conversation and provide guidance (e.g. &quot;don&#x27;t implement Foo through Bar, that&#x27;s suboptimal; instead \u2026&quot;).<p>It supports a `--review` mode, where once the m...",
+    "source": "hackernews",
+    "source_url": "https://github.com/alefore/duende",
+    "category": "education",
+    "severity_score": 6.922138379168121,
+    "mention_count": 6,
+    "keywords": [
+      "that",
+      "conversations",
+      "spawned",
+      "long",
+      "evaluation",
+      "source",
+      "says",
+      "outputs",
+      "tasks",
+      "future"
+    ],
+    "created_at": "2025-07-21T03:41:57"
+  },
+  {
+    "id": "f76fb4a3-6e78-4c23-90a9-d1636b40fb7a",
+    "title": "Social media scheduling tools lack AI-powered content suggestions",
+    "description": "Content creators struggle with consistent posting and need AI assistance for content ideas and optimal posting times.",
+    "source": "reddit",
+    "source_url": "https://reddit.com/r/socialmedia/comments/example5",
+    "category": "marketing",
+    "severity_score": 6.8,
+    "mention_count": 27,
+    "keywords": [
+      "social",
+      "media",
+      "scheduling",
+      "AI",
+      "content",
+      "suggestions"
+    ],
+    "created_at": "2025-07-24T14:35:27.453041"
+  },
+  {
+    "id": "dedce138-d7ba-4025-a079-c4a1318c0c15",
+    "title": "Employee onboarding lacks personalization and automation",
+    "description": "HR departments spend too much time on repetitive onboarding tasks. They need personalized, automated workflows for new employee integration.",
+    "source": "reddit",
+    "source_url": "https://reddit.com/r/humanresources/comments/example7",
+    "category": "productivity",
+    "severity_score": 6.5,
+    "mention_count": 19,
+    "keywords": [
+      "employee",
+      "onboarding",
+      "personalization",
+      "automation",
+      "HR"
+    ],
+    "created_at": "2025-07-24T14:35:27.453055"
+  },
+  {
+    "id": "81e3ae79-d762-448e-bcbb-867c89fe9245",
+    "title": "Show HN: Tinder but it's only pictures of my wife and I can only swipe right",
+    "description": "From Hacker News: Show HN: Tinder but it's only pictures of my wife and I can only swipe right",
+    "source": "hackernews",
+    "source_url": "https://trytender.app/",
+    "category": "general",
+    "severity_score": 5.124068638695411,
+    "mention_count": 551,
+    "keywords": [
+      "swipe",
+      "tinder",
+      "show",
+      "only",
+      "right",
+      "wife",
+      "pictures"
+    ],
+    "created_at": "2025-07-24T05:53:27"
+  },
+  {
+    "id": "prob_crypto_0",
+    "title": "Crypto trading bot configuration is too complex for beginners",
+    "description": "New crypto traders struggle with setting up automated trading bots. The interfaces are confusing and lack proper documentation.",
+    "source": "reddit",
+    "source_url": "https://reddit.com/r/cryptocurrency/comments/example",
+    "category": "finance",
+    "severity_score": 7.3,
+    "mention_count": 15,
+    "keywords": [
+      "crypto",
+      "trading",
+      "bot",
+      "complex",
+      "beginners"
+    ],
+    "created_at": "2024-07-24T02:30:00Z"
+  },
+  {
+    "id": "prob_crypto_1",
+    "title": "Crypto trading bot configuration is too complex for beginners",
+    "description": "New crypto traders struggle with setting up automated trading bots. The interfaces are confusing and lack proper documentation.",
+    "source": "reddit",
+    "source_url": "https://reddit.com/r/cryptocurrency/comments/example",
+    "category": "finance",
+    "severity_score": 7.3999999999999995,
+    "mention_count": 16,
+    "keywords": [
+      "crypto",
+      "trading",
+      "bot",
+      "complex",
+      "beginners"
+    ],
+    "created_at": "2024-07-24T02:30:00Z"
+  },
+  {
+    "id": "prob_crypto_2",
+    "title": "Crypto trading bot configuration is too complex for beginners",
+    "description": "New crypto traders struggle with setting up automated trading bots. The interfaces are confusing and lack proper documentation.",
+    "source": "reddit",
+    "source_url": "https://reddit.com/r/cryptocurrency/comments/example",
+    "category": "finance",
+    "severity_score": 7.5,
+    "mention_count": 17,
+    "keywords": [
+      "crypto",
+      "trading",
+      "bot",
+      "complex",
+      "beginners"
+    ],
+    "created_at": "2024-07-24T02:30:00Z"
+  },
+  {
+    "id": "prob_saas_0",
+    "title": "SaaS pricing models are confusing for small businesses",
+    "description": "Small business owners find it hard to understand complex SaaS pricing tiers and often end up overpaying.",
+    "source": "hackernews",
+    "source_url": "https://news.ycombinator.com/item?id=saas_example",
+    "category": "finance",
+    "severity_score": 8.1,
+    "mention_count": 22,
+    "keywords": [
+      "saas",
+      "pricing",
+      "confusing",
+      "small",
+      "business"
+    ],
+    "created_at": "2024-07-24T02:25:00Z"
+  },
+  {
+    "id": "prob_saas_1",
+    "title": "SaaS pricing models are confusing for small businesses",
+    "description": "Small business owners find it hard to understand complex SaaS pricing tiers and often end up overpaying.",
+    "source": "hackernews",
+    "source_url": "https://news.ycombinator.com/item?id=saas_example",
+    "category": "finance",
+    "severity_score": 8.299999999999999,
+    "mention_count": 23,
+    "keywords": [
+      "saas",
+      "pricing",
+      "confusing",
+      "small",
+      "business"
+    ],
+    "created_at": "2024-07-24T02:25:00Z"
+  },
+  {
+    "id": "prob_saas_2",
+    "title": "SaaS pricing models are confusing for small businesses",
+    "description": "Small business owners find it hard to understand complex SaaS pricing tiers and often end up overpaying.",
+    "source": "hackernews",
+    "source_url": "https://news.ycombinator.com/item?id=saas_example",
+    "category": "finance",
+    "severity_score": 8.5,
+    "mention_count": 24,
+    "keywords": [
+      "saas",
+      "pricing",
+      "confusing",
+      "small",
+      "business"
+    ],
+    "created_at": "2024-07-24T02:25:00Z"
+  },
+  {
+    "id": "prob_ai_0",
+    "title": "AI code generation tools produce insecure code",
+    "description": "Developers using AI assistants often get code with security vulnerabilities that are hard to detect.",
+    "source": "reddit",
+    "source_url": "https://reddit.com/r/programming/comments/ai_security",
+    "category": "developer-tools",
+    "severity_score": 9.1,
+    "mention_count": 78,
+    "keywords": [
+      "AI",
+      "code",
+      "generation",
+      "security",
+      "vulnerabilities"
+    ],
+    "created_at": "2024-07-24T02:20:00Z"
+  },
+  {
+    "id": "prob_ai_1",
+    "title": "AI code generation tools produce insecure code",
+    "description": "Developers using AI assistants often get code with security vulnerabilities that are hard to detect.",
+    "source": "reddit",
+    "source_url": "https://reddit.com/r/programming/comments/ai_security",
+    "category": "developer-tools",
+    "severity_score": 9.2,
+    "mention_count": 79,
+    "keywords": [
+      "AI",
+      "code",
+      "generation",
+      "security",
+      "vulnerabilities"
+    ],
+    "created_at": "2024-07-24T02:20:00Z"
+  },
+  {
+    "id": "prob_ai_2",
+    "title": "AI code generation tools produce insecure code",
+    "description": "Developers using AI assistants often get code with security vulnerabilities that are hard to detect.",
+    "source": "reddit",
+    "source_url": "https://reddit.com/r/programming/comments/ai_security",
+    "category": "developer-tools",
+    "severity_score": 9.299999999999999,
+    "mention_count": 80,
+    "keywords": [
+      "AI",
+      "code",
+      "generation",
+      "security",
+      "vulnerabilities"
+    ],
+    "created_at": "2024-07-24T02:20:00Z"
+  },
+  {
+    "id": "prob_ai_3",
+    "title": "AI code generation tools produce insecure code",
+    "description": "Developers using AI assistants often get code with security vulnerabilities that are hard to detect.",
+    "source": "reddit",
+    "source_url": "https://reddit.com/r/programming/comments/ai_security",
+    "category": "developer-tools",
+    "severity_score": 9.4,
+    "mention_count": 81,
+    "keywords": [
+      "AI",
+      "code",
+      "generation",
+      "security",
+      "vulnerabilities"
+    ],
+    "created_at": "2024-07-24T02:20:00Z"
+  },
+  {
+    "id": "prob_remote_0",
+    "title": "Video conferencing fatigue in remote teams",
+    "description": "Remote workers experience burnout from excessive video calls and need better async communication tools.",
+    "source": "g2",
+    "source_url": "https://g2.com/categories/video-conferencing",
+    "category": "productivity",
+    "severity_score": 6.8,
+    "mention_count": 45,
+    "keywords": [
+      "video",
+      "conferencing",
+      "fatigue",
+      "remote",
+      "burnout"
+    ],
+    "created_at": "2024-07-24T02:15:00Z"
+  },
+  {
+    "id": "prob_remote_1",
+    "title": "Video conferencing fatigue in remote teams",
+    "description": "Remote workers experience burnout from excessive video calls and need better async communication tools.",
+    "source": "g2",
+    "source_url": "https://g2.com/categories/video-conferencing",
+    "category": "productivity",
+    "severity_score": 7.1,
+    "mention_count": 46,
+    "keywords": [
+      "video",
+      "conferencing",
+      "fatigue",
+      "remote",
+      "burnout"
+    ],
+    "created_at": "2024-07-24T02:15:00Z"
+  },
+  {
+    "id": "prob_remote_2",
+    "title": "Video conferencing fatigue in remote teams",
+    "description": "Remote workers experience burnout from excessive video calls and need better async communication tools.",
+    "source": "g2",
+    "source_url": "https://g2.com/categories/video-conferencing",
+    "category": "productivity",
+    "severity_score": 7.3999999999999995,
+    "mention_count": 47,
+    "keywords": [
+      "video",
+      "conferencing",
+      "fatigue",
+      "remote",
+      "burnout"
+    ],
+    "created_at": "2024-07-24T02:15:00Z"
+  },
+  {
+    "id": "prob_remote_3",
+    "title": "Video conferencing fatigue in remote teams",
+    "description": "Remote workers experience burnout from excessive video calls and need better async communication tools.",
+    "source": "g2",
+    "source_url": "https://g2.com/categories/video-conferencing",
+    "category": "productivity",
+    "severity_score": 7.699999999999999,
+    "mention_count": 48,
+    "keywords": [
+      "video",
+      "conferencing",
+      "fatigue",
+      "remote",
+      "burnout"
+    ],
+    "created_at": "2024-07-24T02:15:00Z"
+  },
+  {
+    "id": "prob_remote_4",
+    "title": "Video conferencing fatigue in remote teams",
+    "description": "Remote workers experience burnout from excessive video calls and need better async communication tools.",
+    "source": "g2",
+    "source_url": "https://g2.com/categories/video-conferencing",
+    "category": "productivity",
+    "severity_score": 8.0,
+    "mention_count": 49,
+    "keywords": [
+      "video",
+      "conferencing",
+      "fatigue",
+      "remote",
+      "burnout"
+    ],
+    "created_at": "2024-07-24T02:15:00Z"
+  },
+  {
+    "id": "prob_ecom_0",
+    "title": "E-commerce return management is a nightmare",
+    "description": "Online store owners struggle with return processing, tracking, and customer communication during returns.",
+    "source": "reddit",
+    "source_url": "https://reddit.com/r/ecommerce/comments/returns",
+    "category": "e-commerce",
+    "severity_score": 8.5,
+    "mention_count": 33,
+    "keywords": [
+      "ecommerce",
+      "returns",
+      "management",
+      "tracking",
+      "customers"
+    ],
+    "created_at": "2024-07-24T02:10:00Z"
+  },
+  {
+    "id": "prob_ecom_1",
+    "title": "E-commerce return management is a nightmare",
+    "description": "Online store owners struggle with return processing, tracking, and customer communication during returns.",
+    "source": "reddit",
+    "source_url": "https://reddit.com/r/ecommerce/comments/returns",
+    "category": "e-commerce",
+    "severity_score": 8.6,
+    "mention_count": 34,
+    "keywords": [
+      "ecommerce",
+      "returns",
+      "management",
+      "tracking",
+      "customers"
+    ],
+    "created_at": "2024-07-24T02:10:00Z"
+  },
+  {
+    "id": "prob_ecom_2",
+    "title": "E-commerce return management is a nightmare",
+    "description": "Online store owners struggle with return processing, tracking, and customer communication during returns.",
+    "source": "reddit",
+    "source_url": "https://reddit.com/r/ecommerce/comments/returns",
+    "category": "e-commerce",
+    "severity_score": 8.7,
+    "mention_count": 35,
+    "keywords": [
+      "ecommerce",
+      "returns",
+      "management",
+      "tracking",
+      "customers"
+    ],
+    "created_at": "2024-07-24T02:10:00Z"
+  },
+  {
+    "id": "prob_ecom_3",
+    "title": "E-commerce return management is a nightmare",
+    "description": "Online store owners struggle with return processing, tracking, and customer communication during returns.",
+    "source": "reddit",
+    "source_url": "https://reddit.com/r/ecommerce/comments/returns",
+    "category": "e-commerce",
+    "severity_score": 8.8,
+    "mention_count": 36,
+    "keywords": [
+      "ecommerce",
+      "returns",
+      "management",
+      "tracking",
+      "customers"
+    ],
+    "created_at": "2024-07-24T02:10:00Z"
+  }
+]

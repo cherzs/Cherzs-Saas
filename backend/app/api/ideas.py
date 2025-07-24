@@ -10,49 +10,6 @@ router = APIRouter(prefix="/ideas", tags=["ideas"])
 # Initialize service
 idea_framework_service = IdeaFrameworkService()
 
-# Mock data for development
-MOCK_IDEAS = [
-    {
-        "id": "1",
-        "title": "SimpleEmail - Email Marketing for Small Teams",
-        "description": "A simplified email marketing platform designed specifically for small businesses. Focuses on ease of use and affordability while providing essential automation features.",
-        "problem_id": "1",
-        "framework_type": "unbundle",
-        "market_size": "Medium (niche but growing)",
-        "competition_level": "medium",
-        "monetization_model": "Subscription-based with tiered pricing",
-        "tech_stack": ["React", "Node.js", "PostgreSQL", "AWS"],
-        "validation_score": 75,
-        "created_at": "2024-01-15T10:30:00Z"
-    },
-    {
-        "id": "2",
-        "title": "RemoteFlow - Project Management for Remote Teams",
-        "description": "Project management tool built specifically for remote teams with built-in time tracking, video calls, and collaboration features.",
-        "problem_id": "2",
-        "framework_type": "niche",
-        "market_size": "Large and growing",
-        "competition_level": "high",
-        "monetization_model": "Monthly subscription per user",
-        "tech_stack": ["React", "Python FastAPI", "PostgreSQL", "WebRTC"],
-        "validation_score": 82,
-        "created_at": "2024-01-14T15:45:00Z"
-    },
-    {
-        "id": "3",
-        "title": "StartupSupport - Affordable Customer Support for Startups",
-        "description": "Customer support platform designed for startups with simple pricing and essential features without enterprise complexity.",
-        "problem_id": "3",
-        "framework_type": "niche",
-        "market_size": "Small but loyal",
-        "competition_level": "low",
-        "monetization_model": "Monthly subscription with startup-friendly pricing",
-        "tech_stack": ["React", "Python FastAPI", "PostgreSQL", "Stripe"],
-        "validation_score": 88,
-        "created_at": "2024-01-13T09:20:00Z"
-    }
-]
-
 @router.get("/frameworks")
 async def get_available_frameworks():
     """Get available idea generation frameworks"""
@@ -73,24 +30,31 @@ async def generate_idea(
 ):
     """Generate an idea using a specific framework"""
     try:
-        # Generate a new idea with unique ID
-        new_idea = {
+        # Generate idea using the framework service
+        generated_idea = await idea_framework_service.generate_idea_with_framework(
+            framework_type, problem, industry
+        )
+        
+        # Add metadata
+        idea_with_metadata = {
             "id": str(uuid.uuid4()),
-            "title": f"Generated {framework_type.title()} Solution",
-            "description": f"AI-generated solution for: {problem.get('title', 'Unknown problem')}",
-            "problem_id": problem.get('id', 'unknown'),
+            "title": generated_idea.get("title", f"Generated {framework_type.title()} Solution"),
+            "description": generated_idea.get("description", ""),
+            "problem_id": problem.get("id", "unknown"),
             "framework_type": framework_type,
-            "market_size": "To be determined",
-            "competition_level": "medium",
-            "monetization_model": "Subscription-based SaaS",
-            "tech_stack": ["React", "Python FastAPI", "PostgreSQL", "AWS"],
-            "validation_score": 65,
-            "created_at": datetime.now().isoformat()
+            "market_size": generated_idea.get("market_size", "To be determined"),
+            "competition_level": generated_idea.get("competition_level", "medium"),
+            "monetization_model": generated_idea.get("monetization_model", "Subscription-based SaaS"),
+            "tech_stack": generated_idea.get("tech_stack", ["React", "Python FastAPI", "PostgreSQL", "AWS"]),
+            "validation_score": 65,  # Default score, will be updated after validation
+            "created_at": datetime.now().isoformat(),
+            "target_audience": generated_idea.get("target_audience", ""),
+            "key_features": generated_idea.get("key_features", [])
         }
         
         return {
             "success": True,
-            "data": new_idea,
+            "data": idea_with_metadata,
             "framework_used": framework_type
         }
     except ValueError as e:
@@ -102,11 +66,10 @@ async def generate_idea(
 async def analyze_competition(idea: Dict = Body(..., description="Idea to analyze")):
     """Analyze competition for an idea"""
     try:
-        analysis = await idea_framework_service.analyze_competition(idea)
-        
+        competition_analysis = await idea_framework_service.analyze_competition(idea)
         return {
             "success": True,
-            "data": analysis
+            "data": competition_analysis
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -115,11 +78,10 @@ async def analyze_competition(idea: Dict = Body(..., description="Idea to analyz
 async def estimate_market_size(idea: Dict = Body(..., description="Idea to analyze")):
     """Estimate market size for an idea"""
     try:
-        market_data = await idea_framework_service.estimate_market_size(idea)
-        
+        market_estimate = await idea_framework_service.estimate_market_size(idea)
         return {
             "success": True,
-            "data": market_data
+            "data": market_estimate
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -129,19 +91,22 @@ async def get_framework_examples(framework_type: str):
     """Get examples for a specific framework"""
     try:
         frameworks = idea_framework_service.get_available_frameworks()
+        framework = frameworks.get(framework_type)
         
-        if framework_type not in frameworks:
+        if not framework:
             raise HTTPException(status_code=404, detail="Framework not found")
-        
-        framework = frameworks[framework_type]
         
         return {
             "success": True,
             "data": {
-                "framework": framework,
+                "framework_type": framework_type,
+                "name": framework.get("name", ""),
+                "description": framework.get("description", ""),
                 "examples": framework.get("examples", [])
             }
         }
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -151,30 +116,43 @@ async def batch_generate_ideas(
     framework_type: str = Body(..., description="Framework to use for all ideas"),
     industry: Optional[str] = Body(None, description="Target industry")
 ):
-    """Generate multiple ideas for a list of problems"""
+    """Generate multiple ideas from a list of problems"""
     try:
-        ideas = []
+        generated_ideas = []
         
         for problem in problems:
-            idea = {
-                "id": str(uuid.uuid4()),
-                "title": f"Generated {framework_type.title()} Solution for {problem.get('title', 'Problem')}",
-                "description": f"AI-generated solution using {framework_type} framework for: {problem.get('description', 'Unknown problem')}",
-                "problem_id": problem.get('id', 'unknown'),
-                "framework_type": framework_type,
-                "market_size": "To be determined",
-                "competition_level": "medium",
-                "monetization_model": "Subscription-based SaaS",
-                "tech_stack": ["React", "Python FastAPI", "PostgreSQL", "AWS"],
-                "validation_score": 60 + (len(ideas) * 5),  # Varying scores
-                "created_at": datetime.now().isoformat()
-            }
-            ideas.append(idea)
+            try:
+                # Generate idea for each problem
+                generated_idea = await idea_framework_service.generate_idea_with_framework(
+                    framework_type, problem, industry
+                )
+                
+                idea_with_metadata = {
+                    "id": str(uuid.uuid4()),
+                    "title": generated_idea.get("title", f"Generated {framework_type.title()} Solution"),
+                    "description": generated_idea.get("description", ""),
+                    "problem_id": problem.get("id", "unknown"),
+                    "framework_type": framework_type,
+                    "market_size": generated_idea.get("market_size", "To be determined"),
+                    "competition_level": generated_idea.get("competition_level", "medium"),
+                    "monetization_model": generated_idea.get("monetization_model", "Subscription-based SaaS"),
+                    "tech_stack": generated_idea.get("tech_stack", ["React", "Python FastAPI", "PostgreSQL", "AWS"]),
+                    "validation_score": 65,
+                    "created_at": datetime.now().isoformat(),
+                    "target_audience": generated_idea.get("target_audience", ""),
+                    "key_features": generated_idea.get("key_features", [])
+                }
+                
+                generated_ideas.append(idea_with_metadata)
+                
+            except Exception as e:
+                print(f"Error generating idea for problem {problem.get('id', 'unknown')}: {e}")
+                continue
         
         return {
             "success": True,
-            "data": ideas,
-            "count": len(ideas),
+            "data": generated_ideas,
+            "count": len(generated_ideas),
             "framework_used": framework_type
         }
     except Exception as e:
@@ -182,123 +160,101 @@ async def batch_generate_ideas(
 
 @router.get("/industries")
 async def get_available_industries():
-    """Get list of available industries for niche targeting"""
-    industries = [
-        "real-estate",
-        "healthcare", 
-        "education",
-        "finance",
-        "legal",
-        "restaurant",
-        "fitness",
-        "e-commerce",
-        "marketing",
-        "consulting",
-        "manufacturing",
-        "retail",
-        "technology",
-        "non-profit",
-        "government"
-    ]
-    
-    return {
-        "success": True,
-        "data": industries
-    }
-
-@router.post("/validate-idea")
-async def validate_idea(idea: Dict = Body(..., description="Idea to validate")):
-    """Validate an idea using multiple criteria"""
+    """Get available industries for idea generation"""
     try:
-        # Get competition analysis
-        competition = await idea_framework_service.analyze_competition(idea)
-        
-        # Get market size estimation
-        market_size = await idea_framework_service.estimate_market_size(idea)
-        
-        # Calculate validation score
-        validation_score = 0
-        
-        # Score based on competition level
-        competition_level = competition.get("market_saturation", "Medium")
-        if competition_level == "Low":
-            validation_score += 30
-        elif competition_level == "Medium":
-            validation_score += 20
-        else:
-            validation_score += 10
-        
-        # Score based on market size
-        market_range = market_size.get("obtainable_market", "$5M - $20M")
-        if "B" in market_range:
-            validation_score += 30
-        elif "M" in market_range and "50M" in market_range:
-            validation_score += 25
-        elif "M" in market_range:
-            validation_score += 20
-        else:
-            validation_score += 10
-        
-        # Score based on idea complexity
-        tech_stack = idea.get("tech_stack", [])
-        if len(tech_stack) <= 3:
-            validation_score += 20  # Simple to implement
-        elif len(tech_stack) <= 5:
-            validation_score += 15  # Moderate complexity
-        else:
-            validation_score += 10  # Complex implementation
-        
-        # Score based on monetization model
-        monetization = idea.get("monetization_model", "")
-        if "subscription" in monetization.lower():
-            validation_score += 20  # Recurring revenue
-        elif "usage" in monetization.lower():
-            validation_score += 15  # Usage-based
-        else:
-            validation_score += 10  # One-time or other
-        
-        validation_score = min(100, validation_score)
+        # Return common industries for SaaS ideas
+        industries = [
+            "e-commerce",
+            "healthcare",
+            "education",
+            "finance",
+            "real-estate",
+            "marketing",
+            "productivity",
+            "developer-tools",
+            "customer-support",
+            "analytics",
+            "automation",
+            "collaboration",
+            "security",
+            "compliance",
+            "general"
+        ]
         
         return {
             "success": True,
-            "data": {
-                "idea": idea,
-                "competition_analysis": competition,
-                "market_size": market_size,
-                "validation_score": validation_score,
-                "recommendations": _generate_validation_recommendations(validation_score)
-            }
+            "data": industries
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-def _generate_validation_recommendations(score: int) -> List[str]:
-    """Generate recommendations based on validation score"""
-    recommendations = []
-    
-    if score >= 80:
-        recommendations.extend([
-            "Strong idea with high potential",
-            "Consider building MVP",
-            "Start market research and user interviews"
-        ])
-    elif score >= 60:
-        recommendations.extend([
-            "Good idea with potential",
-            "Refine value proposition",
-            "Conduct more market research"
-        ])
-    elif score >= 40:
-        recommendations.extend([
-            "Moderate potential",
-            "Consider pivoting or refining",
-            "Focus on unique differentiation"
-        ])
-    else:
-        recommendations.extend([
-            "Low validation score",
-            "Consider different approach or market",
-            "Conduct more research before proceeding"
-        ])
-    
-    return recommendations 
+@router.post("/validate-idea")
+async def validate_idea(idea: Dict = Body(..., description="Idea to validate")):
+    """Validate an idea using various criteria"""
+    try:
+        # Perform idea validation
+        validation_results = {
+            "idea_id": idea.get("id", "unknown"),
+            "validation_score": 0,
+            "criteria": {
+                "problem_validation": {
+                    "score": 0,
+                    "status": "pending",
+                    "notes": "Problem validation pending"
+                },
+                "market_opportunity": {
+                    "score": 0,
+                    "status": "pending", 
+                    "notes": "Market analysis pending"
+                },
+                "competition_analysis": {
+                    "score": 0,
+                    "status": "pending",
+                    "notes": "Competition analysis pending"
+                },
+                "technical_feasibility": {
+                    "score": 0,
+                    "status": "pending",
+                    "notes": "Technical assessment pending"
+                }
+            },
+            "recommendations": [],
+            "next_steps": [
+                "Create validation survey",
+                "Build landing page",
+                "Conduct market research",
+                "Analyze competition"
+            ],
+            "validated_at": datetime.now().isoformat()
+        }
+        
+        # Calculate initial score based on idea quality
+        if idea.get("description") and len(idea.get("description", "")) > 50:
+            validation_results["validation_score"] += 20
+        
+        if idea.get("target_audience"):
+            validation_results["validation_score"] += 20
+        
+        if idea.get("key_features") and len(idea.get("key_features", [])) > 0:
+            validation_results["validation_score"] += 20
+        
+        if idea.get("monetization_model"):
+            validation_results["validation_score"] += 20
+        
+        if idea.get("tech_stack") and len(idea.get("tech_stack", [])) > 0:
+            validation_results["validation_score"] += 20
+        
+        # Add recommendations based on score
+        if validation_results["validation_score"] >= 80:
+            validation_results["recommendations"].append("Excellent idea! Ready for validation.")
+        elif validation_results["validation_score"] >= 60:
+            validation_results["recommendations"].append("Good potential. Focus on validation.")
+        else:
+            validation_results["recommendations"].append("Needs more development before validation.")
+        
+        return {
+            "success": True,
+            "data": validation_results
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e)) 

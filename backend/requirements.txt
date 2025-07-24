@@ -7,6 +7,9 @@ requests
 beautifulsoup4
 openai
 pinecone-client
+sentence-transformers
+boto3
+botocore
 stripe
 python-jose[cryptography]
 passlib[bcrypt]
@@ -15,5 +18,5 @@ pydantic
 pydantic-settings
 python-decouple
 aiofiles
-PyJWT
-pinecone
+PyJWTgoogle-generativeai
+google-genai
