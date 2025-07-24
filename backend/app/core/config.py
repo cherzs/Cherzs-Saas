@@ -1,5 +1,5 @@
 from pydantic_settings import BaseSettings
-from typing import Optional
+from typing import Optional, List
 import os
 from dotenv import load_dotenv
 
@@ -38,7 +38,12 @@ class Settings(BaseSettings):
     BRIGHT_DATA_PASSWORD: Optional[str] = os.getenv("BRIGHT_DATA_PASSWORD")
     
     # CORS
-    CORS_ORIGINS: str = "http://localhost:3000"
+    CORS_ORIGINS: str = os.getenv("CORS_ORIGINS", "http://localhost:3000")
+    
+    @property
+    def CORS_ORIGINS_LIST(self) -> List[str]:
+        """Convert CORS_ORIGINS string to list"""
+        return [origin.strip() for origin in self.CORS_ORIGINS.split(",")]
     
     class Config:
         env_file = ".env"

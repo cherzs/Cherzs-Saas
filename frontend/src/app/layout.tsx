@@ -1,34 +1,27 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
+import { AppProvider } from '@/contexts/AppContext'
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "Cherzs - SaaS Idea Discovery Platform",
-  description: "Discover validated problems, generate ideas with proven frameworks, and validate your concepts with real market data.",
-};
+  title: 'Cherzs - SaaS Idea Discovery and Validation',
+  description: 'Discover real problems and generate validated SaaS ideas',
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={inter.className}>
+        <AppProvider>
+          {children}
+        </AppProvider>
       </body>
     </html>
-  );
+  )
 }

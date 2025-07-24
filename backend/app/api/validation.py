@@ -2,11 +2,55 @@ from fastapi import APIRouter, HTTPException, Body, Query
 from typing import List, Dict, Optional
 from app.services.validation_toolkit import ValidationToolkitService
 from app.core.config import settings
+import uuid
+from datetime import datetime
 
 router = APIRouter(prefix="/validation", tags=["validation"])
 
 # Initialize service
 validation_service = ValidationToolkitService()
+
+# Mock data for development
+MOCK_VALIDATIONS = [
+    {
+        "id": "1",
+        "idea_id": "1",
+        "validation_type": "survey",
+        "status": "completed",
+        "results": {
+            "total_responses": 45,
+            "completion_rate": 0.85,
+            "avg_willingness_to_pay": 3.8,
+            "problem_frequency": 4.2
+        },
+        "created_at": "2024-01-15T10:30:00Z"
+    },
+    {
+        "id": "2",
+        "idea_id": "2",
+        "validation_type": "landing_page",
+        "status": "active",
+        "results": {
+            "total_visitors": 120,
+            "email_signups": 18,
+            "conversion_rate": 0.15,
+            "bounce_rate": 0.35
+        },
+        "created_at": "2024-01-14T15:45:00Z"
+    },
+    {
+        "id": "3",
+        "idea_id": "3",
+        "validation_type": "market_research",
+        "status": "pending",
+        "results": {
+            "competitor_analysis": "In progress",
+            "market_size_estimate": "Pending",
+            "trend_analysis": "Pending"
+        },
+        "created_at": "2024-01-13T09:20:00Z"
+    }
+]
 
 @router.post("/surveys/create")
 async def create_survey(
@@ -16,11 +60,24 @@ async def create_survey(
 ):
     """Create a validation survey"""
     try:
-        survey = await validation_service.create_survey(survey_type, idea, custom_questions)
+        # Create a new validation entry
+        new_validation = {
+            "id": str(uuid.uuid4()),
+            "idea_id": idea.get("id", "unknown"),
+            "validation_type": "survey",
+            "status": "active",
+            "results": {
+                "total_responses": 0,
+                "completion_rate": 0.0,
+                "avg_willingness_to_pay": 0,
+                "problem_frequency": 0
+            },
+            "created_at": datetime.now().isoformat()
+        }
         
         return {
             "success": True,
-            "data": survey
+            "data": new_validation
         }
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -58,11 +115,24 @@ async def create_landing_page(
 ):
     """Create a landing page for idea validation"""
     try:
-        landing_page = await validation_service.create_landing_page(template_type, idea, custom_content)
+        # Create a new validation entry
+        new_validation = {
+            "id": str(uuid.uuid4()),
+            "idea_id": idea.get("id", "unknown"),
+            "validation_type": "landing_page",
+            "status": "active",
+            "results": {
+                "total_visitors": 0,
+                "email_signups": 0,
+                "conversion_rate": 0.0,
+                "bounce_rate": 0.0
+            },
+            "created_at": datetime.now().isoformat()
+        }
         
         return {
             "success": True,
-            "data": landing_page
+            "data": new_validation
         }
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -172,15 +242,19 @@ async def generate_validation_report(
 async def get_landing_page_metrics(landing_page_id: str):
     """Get metrics for a specific landing page"""
     try:
-        # In a real implementation, this would fetch from database
-        # For now, return mock data
+        # Find validation in mock data
+        validation = next((v for v in MOCK_VALIDATIONS if v["id"] == landing_page_id), None)
+        
+        if not validation:
+            raise HTTPException(status_code=404, detail="Landing page not found")
+        
         metrics = {
             "landing_page_id": landing_page_id,
-            "total_visitors": 150,
-            "unique_visitors": 120,
-            "email_signups": 25,
-            "conversion_rate": 0.167,
-            "bounce_rate": 0.35,
+            "total_visitors": validation["results"].get("total_visitors", 0),
+            "unique_visitors": validation["results"].get("total_visitors", 0),
+            "email_signups": validation["results"].get("email_signups", 0),
+            "conversion_rate": validation["results"].get("conversion_rate", 0.0),
+            "bounce_rate": validation["results"].get("bounce_rate", 0.0),
             "avg_time_on_page": 120,
             "traffic_sources": {
                 "direct": 40,
@@ -188,18 +262,7 @@ async def get_landing_page_metrics(landing_page_id: str):
                 "search": 20,
                 "referral": 10
             },
-            "events": [
-                {
-                    "type": "page_view",
-                    "count": 150,
-                    "timestamp": "2024-01-15T10:30:00Z"
-                },
-                {
-                    "type": "email_signup",
-                    "count": 25,
-                    "timestamp": "2024-01-15T10:30:00Z"
-                }
-            ]
+            "events": []
         }
         
         return {
@@ -213,41 +276,22 @@ async def get_landing_page_metrics(landing_page_id: str):
 async def get_survey_results(survey_id: str):
     """Get results for a specific survey"""
     try:
-        # In a real implementation, this would fetch from database
-        # For now, return mock data
+        # Find validation in mock data
+        validation = next((v for v in MOCK_VALIDATIONS if v["id"] == survey_id), None)
+        
+        if not validation:
+            raise HTTPException(status_code=404, detail="Survey not found")
+        
         results = {
             "survey_id": survey_id,
-            "total_responses": 45,
-            "completion_rate": 0.89,
+            "total_responses": validation["results"].get("total_responses", 0),
+            "completion_rate": validation["results"].get("completion_rate", 0.0),
             "avg_completion_time": 180,
-            "responses": [
-                {
-                    "question_id": "problem_frequency",
-                    "question": "How often do you face this problem?",
-                    "responses": {
-                        "Never": 2,
-                        "Rarely": 5,
-                        "Sometimes": 12,
-                        "Often": 18,
-                        "Daily": 8
-                    }
-                },
-                {
-                    "question_id": "willingness_to_pay",
-                    "question": "Would you pay for a solution to this problem?",
-                    "responses": {
-                        "No": 3,
-                        "Maybe": 8,
-                        "Yes": 15,
-                        "Definitely": 12,
-                        "Already paying": 7
-                    }
-                }
-            ],
+            "responses": [],
             "insights": [
-                "85% of respondents face this problem at least sometimes",
-                "76% are willing to pay for a solution",
-                "Average willingness to pay: $25/month"
+                "Most users find the problem significant",
+                "Willingness to pay is moderate to high",
+                "Users prefer simple, affordable solutions"
             ]
         }
         

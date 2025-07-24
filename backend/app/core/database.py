@@ -29,4 +29,4 @@ def init_db():
 
 def drop_db():
     """Drop all database tables"""
-    Base.metadata.drop_all(bind=engine) 
+    Base.metadata.drop_all(bind=engine)

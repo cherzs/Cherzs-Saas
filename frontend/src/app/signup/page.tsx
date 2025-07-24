@@ -104,7 +104,7 @@ export default function SignupPage() {
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="fullName" className="block text-sm font-medium text-gray-300 mb-2">
                   Full Name
                 </label>
                 <div className="relative">
@@ -114,7 +114,7 @@ export default function SignupPage() {
                     type="text"
                     value={formData.fullName}
                     onChange={(e) => handleInputChange('fullName', e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-700 bg-gray-800 text-white rounded-lg focus:ring-2 focus:ring-white focus:border-white placeholder-gray-400"
                     placeholder="Enter your full name"
                     required
                   />
@@ -122,7 +122,7 @@ export default function SignupPage() {
               </div>
               
               <div>
-                <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="username" className="block text-sm font-medium text-gray-300 mb-2">
                   Username
                 </label>
                 <div className="relative">
@@ -132,7 +132,7 @@ export default function SignupPage() {
                     type="text"
                     value={formData.username}
                     onChange={(e) => handleInputChange('username', e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-700 bg-gray-800 text-white rounded-lg focus:ring-2 focus:ring-white focus:border-white placeholder-gray-400"
                     placeholder="Choose a username"
                     required
                   />
@@ -140,7 +140,7 @@ export default function SignupPage() {
               </div>
               
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                   Email Address
                 </label>
                 <div className="relative">
@@ -150,7 +150,7 @@ export default function SignupPage() {
                     type="email"
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-700 bg-gray-800 text-white rounded-lg focus:ring-2 focus:ring-white focus:border-white placeholder-gray-400"
                     placeholder="Enter your email"
                     required
                   />
@@ -158,7 +158,7 @@ export default function SignupPage() {
               </div>
               
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
                   Password
                 </label>
                 <div className="relative">
@@ -168,14 +168,14 @@ export default function SignupPage() {
                     type={showPassword ? 'text' : 'password'}
                     value={formData.password}
                     onChange={(e) => handleInputChange('password', e.target.value)}
-                    className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full pl-10 pr-12 py-3 border border-gray-700 bg-gray-800 text-white rounded-lg focus:ring-2 focus:ring-white focus:border-white placeholder-gray-400"
                     placeholder="Create a password"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
@@ -190,19 +190,19 @@ export default function SignupPage() {
                           <div
                             key={level}
                             className={`h-1 w-8 rounded ${
-                              level <= passwordStrength ? getPasswordStrengthColor() : 'bg-gray-200'
+                              level <= passwordStrength ? getPasswordStrengthColor() : 'bg-gray-600'
                             }`}
                           />
                         ))}
                       </div>
-                      <span className="text-xs text-gray-600">{getPasswordStrengthText()}</span>
+                      <span className="text-xs text-gray-400">{getPasswordStrengthText()}</span>
                     </div>
                   </div>
                 )}
               </div>
               
               <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-2">
                   Confirm Password
                 </label>
                 <div className="relative">
@@ -212,14 +212,14 @@ export default function SignupPage() {
                     type={showConfirmPassword ? 'text' : 'password'}
                     value={formData.confirmPassword}
                     onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                    className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full pl-10 pr-12 py-3 border border-gray-700 bg-gray-800 text-white rounded-lg focus:ring-2 focus:ring-white focus:border-white placeholder-gray-400"
                     placeholder="Confirm your password"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
                   >
                     {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
@@ -230,13 +230,13 @@ export default function SignupPage() {
                   <div className="mt-2 flex items-center space-x-2">
                     {formData.password === formData.confirmPassword ? (
                       <>
-                        <CheckCircle className="h-4 w-4 text-green-500" />
-                        <span className="text-xs text-green-600">Passwords match</span>
+                        <CheckCircle className="h-4 w-4 text-green-400" />
+                        <span className="text-xs text-green-400">Passwords match</span>
                       </>
                     ) : (
                       <>
-                        <div className="h-4 w-4 rounded-full border-2 border-red-300" />
-                        <span className="text-xs text-red-600">Passwords don't match</span>
+                        <div className="h-4 w-4 rounded-full border-2 border-red-400" />
+                        <span className="text-xs text-red-400">Passwords don't match</span>
                       </>
                     )}
                   </div>
@@ -247,16 +247,16 @@ export default function SignupPage() {
                 <input
                   type="checkbox"
                   id="terms"
-                  className="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  className="mt-1 rounded border-gray-600 bg-gray-800 text-white focus:ring-white"
                   required
                 />
-                <label htmlFor="terms" className="text-sm text-gray-600">
+                <label htmlFor="terms" className="text-sm text-gray-400">
                   I agree to the{' '}
-                  <Link href="/terms" className="text-blue-600 hover:text-blue-500">
+                  <Link href="/terms" className="text-white hover:text-gray-300">
                     Terms of Service
                   </Link>{' '}
                   and{' '}
-                  <Link href="/privacy" className="text-blue-600 hover:text-blue-500">
+                  <Link href="/privacy" className="text-white hover:text-gray-300">
                     Privacy Policy
                   </Link>
                 </label>
@@ -264,7 +264,7 @@ export default function SignupPage() {
               
               <Button
                 type="submit"
-                className="w-full py-3"
+                className="w-full py-3 bg-white text-black hover:bg-gray-200"
                 disabled={isLoading || formData.password !== formData.confirmPassword}
               >
                 {isLoading ? 'Creating account...' : 'Create Account'}
@@ -272,9 +272,9 @@ export default function SignupPage() {
             </form>
             
             <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-400">
                 Already have an account?{' '}
-                <Link href="/login" className="text-blue-600 hover:text-blue-500 font-medium">
+                <Link href="/login" className="text-white hover:text-gray-300 font-medium">
                   Sign in
                 </Link>
               </p>

@@ -259,20 +259,22 @@ class IdeaFrameworkService:
     
     async def analyze_competition(self, idea: Dict) -> Dict:
         """Analyze competition for an idea"""
+        # TODO: Implement actual competition analysis
         # This would integrate with tools like SimilarWeb, SEMrush, etc.
         return {
-            "competitor_count": "5-10 major competitors",
-            "market_saturation": "Medium",
-            "entry_barriers": "Low to Medium",
+            "competitor_count": "0-5 competitors",
+            "market_saturation": "Low",
+            "entry_barriers": "Low",
             "differentiation_opportunities": "High"
         }
     
     async def estimate_market_size(self, idea: Dict) -> Dict:
         """Estimate market size for an idea"""
+        # TODO: Implement actual market size estimation
         # This would use data from sources like Statista, industry reports, etc.
         return {
-            "total_addressable_market": "$500M - $2B",
-            "serviceable_market": "$50M - $200M",
-            "obtainable_market": "$5M - $20M",
-            "growth_rate": "15-25% annually"
+            "total_addressable_market": "$10M - $50M",
+            "serviceable_market": "$1M - $5M",
+            "obtainable_market": "$100K - $500K",
+            "growth_rate": "10-20% annually"
         } 

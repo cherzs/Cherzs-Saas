@@ -52,7 +52,7 @@ const CardDescription = React.forwardRef<HTMLParagraphElement, CardDescriptionPr
     return (
       <p
         ref={ref}
-        className={`text-sm text-gray-600 ${className}`}
+        className={`text-sm text-gray-400 ${className}`}
         {...props}
       />
     )

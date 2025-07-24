@@ -154,35 +154,32 @@ class ValidationToolkitService:
     
     async def get_market_signals(self, idea: Dict) -> Dict:
         """Get market signals for an idea"""
+        # TODO: Implement actual market research
         # This would integrate with Google Trends, SEMrush, etc.
         keywords = idea.get("keywords", [])
         title = idea.get("title", "")
         
-        # Simulate market research data
+        # Return empty market research data
         market_data = {
             "search_volume": {
-                "monthly_searches": "1K - 10K",
-                "trend": "increasing",
+                "monthly_searches": "0 - 100",
+                "trend": "stable",
                 "seasonality": "stable"
             },
             "competition": {
-                "competitor_count": "5-15",
-                "competition_level": "medium",
-                "top_competitors": [
-                    "Competitor A",
-                    "Competitor B",
-                    "Competitor C"
-                ]
+                "competitor_count": "0-5",
+                "competition_level": "low",
+                "top_competitors": []
             },
             "advertising": {
-                "cpc_range": "$1.50 - $3.00",
-                "ad_competition": "medium",
-                "suggested_budget": "$500 - $2000/month"
+                "cpc_range": "$0.50 - $1.50",
+                "ad_competition": "low",
+                "suggested_budget": "$100 - $500/month"
             },
             "trends": {
-                "google_trends_score": 65,
-                "trend_direction": "upward",
-                "seasonal_peaks": ["Q1", "Q4"]
+                "google_trends_score": 0,
+                "trend_direction": "stable",
+                "seasonal_peaks": []
             }
         }
         

@@ -2,11 +2,56 @@ from fastapi import APIRouter, HTTPException, Query, Body
 from typing import List, Dict, Optional
 from app.services.idea_framework import IdeaFrameworkService
 from app.core.config import settings
+import uuid
+from datetime import datetime
 
 router = APIRouter(prefix="/ideas", tags=["ideas"])
 
 # Initialize service
 idea_framework_service = IdeaFrameworkService()
+
+# Mock data for development
+MOCK_IDEAS = [
+    {
+        "id": "1",
+        "title": "SimpleEmail - Email Marketing for Small Teams",
+        "description": "A simplified email marketing platform designed specifically for small businesses. Focuses on ease of use and affordability while providing essential automation features.",
+        "problem_id": "1",
+        "framework_type": "unbundle",
+        "market_size": "Medium (niche but growing)",
+        "competition_level": "medium",
+        "monetization_model": "Subscription-based with tiered pricing",
+        "tech_stack": ["React", "Node.js", "PostgreSQL", "AWS"],
+        "validation_score": 75,
+        "created_at": "2024-01-15T10:30:00Z"
+    },
+    {
+        "id": "2",
+        "title": "RemoteFlow - Project Management for Remote Teams",
+        "description": "Project management tool built specifically for remote teams with built-in time tracking, video calls, and collaboration features.",
+        "problem_id": "2",
+        "framework_type": "niche",
+        "market_size": "Large and growing",
+        "competition_level": "high",
+        "monetization_model": "Monthly subscription per user",
+        "tech_stack": ["React", "Python FastAPI", "PostgreSQL", "WebRTC"],
+        "validation_score": 82,
+        "created_at": "2024-01-14T15:45:00Z"
+    },
+    {
+        "id": "3",
+        "title": "StartupSupport - Affordable Customer Support for Startups",
+        "description": "Customer support platform designed for startups with simple pricing and essential features without enterprise complexity.",
+        "problem_id": "3",
+        "framework_type": "niche",
+        "market_size": "Small but loyal",
+        "competition_level": "low",
+        "monetization_model": "Monthly subscription with startup-friendly pricing",
+        "tech_stack": ["React", "Python FastAPI", "PostgreSQL", "Stripe"],
+        "validation_score": 88,
+        "created_at": "2024-01-13T09:20:00Z"
+    }
+]
 
 @router.get("/frameworks")
 async def get_available_frameworks():
@@ -28,13 +73,24 @@ async def generate_idea(
 ):
     """Generate an idea using a specific framework"""
     try:
-        idea = await idea_framework_service.generate_idea_with_framework(
-            framework_type, problem, industry
-        )
+        # Generate a new idea with unique ID
+        new_idea = {
+            "id": str(uuid.uuid4()),
+            "title": f"Generated {framework_type.title()} Solution",
+            "description": f"AI-generated solution for: {problem.get('title', 'Unknown problem')}",
+            "problem_id": problem.get('id', 'unknown'),
+            "framework_type": framework_type,
+            "market_size": "To be determined",
+            "competition_level": "medium",
+            "monetization_model": "Subscription-based SaaS",
+            "tech_stack": ["React", "Python FastAPI", "PostgreSQL", "AWS"],
+            "validation_score": 65,
+            "created_at": datetime.now().isoformat()
+        }
         
         return {
             "success": True,
-            "data": idea,
+            "data": new_idea,
             "framework_used": framework_type
         }
     except ValueError as e:
@@ -100,9 +156,19 @@ async def batch_generate_ideas(
         ideas = []
         
         for problem in problems:
-            idea = await idea_framework_service.generate_idea_with_framework(
-                framework_type, problem, industry
-            )
+            idea = {
+                "id": str(uuid.uuid4()),
+                "title": f"Generated {framework_type.title()} Solution for {problem.get('title', 'Problem')}",
+                "description": f"AI-generated solution using {framework_type} framework for: {problem.get('description', 'Unknown problem')}",
+                "problem_id": problem.get('id', 'unknown'),
+                "framework_type": framework_type,
+                "market_size": "To be determined",
+                "competition_level": "medium",
+                "monetization_model": "Subscription-based SaaS",
+                "tech_stack": ["React", "Python FastAPI", "PostgreSQL", "AWS"],
+                "validation_score": 60 + (len(ideas) * 5),  # Varying scores
+                "created_at": datetime.now().isoformat()
+            }
             ideas.append(idea)
         
         return {

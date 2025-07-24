@@ -229,14 +229,14 @@ class ProblemRadarService:
         """Aggregate problems from all sources"""
         all_problems = []
         
-        # Scrape from different sources
-        reddit_problems = await self.scrape_reddit_problems()
-        hn_problems = await self.scrape_hackernews_problems()
-        g2_problems = await self.scrape_g2_reviews()
+        # TODO: Implement actual scraping
+        # reddit_problems = await self.scrape_reddit_problems()
+        # hn_problems = await self.scrape_hackernews_problems()
+        # g2_problems = await self.scrape_g2_reviews()
         
-        all_problems.extend(reddit_problems)
-        all_problems.extend(hn_problems)
-        all_problems.extend(g2_problems)
+        # all_problems.extend(reddit_problems)
+        # all_problems.extend(hn_problems)
+        # all_problems.extend(g2_problems)
         
         # Apply filters if provided
         if filters:
