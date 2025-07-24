@@ -65,7 +65,7 @@ npm install
 if [ ! -f ".env.local" ]; then
     echo "Creating .env.local file..."
     cat > .env.local << EOF
-NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_API_URL=http://localhost:8001
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your-clerk-publishable-key
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your-stripe-publishable-key
 EOF
@@ -85,8 +85,8 @@ echo "4. Start the frontend: cd frontend && npm run dev"
 echo ""
 echo "🌐 Access the application:"
 echo "   Frontend: http://localhost:3000"
-echo "   Backend API: http://localhost:8000"
-echo "   API Docs: http://localhost:8000/docs"
+echo "   Backend API: http://localhost:8001"
+echo "   API Docs: http://localhost:8001/docs"
 echo ""
 echo "📧 Demo account: demo@cherzs.com / demo123"
 echo ""

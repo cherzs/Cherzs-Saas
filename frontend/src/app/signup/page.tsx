@@ -63,40 +63,40 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-black flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-4">
+          <Link href="/" className="inline-flex items-center text-gray-400 hover:text-white mb-4">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Home
           </Link>
           
           <div className="flex items-center justify-center space-x-2 mb-4">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">C</span>
+            <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
+              <span className="text-black font-bold text-sm">C</span>
             </div>
-            <span className="text-2xl font-bold text-gray-900">Cherzs</span>
+            <span className="text-2xl font-bold text-white">Cherzs</span>
           </div>
           
-          <Badge variant="secondary" className="mb-2">
+          <Badge variant="secondary" className="mb-2 bg-gray-900 text-gray-300 border-gray-700">
             Join Cherzs
           </Badge>
           
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-bold text-white mb-2">
             Create your account
           </h1>
           
-          <p className="text-gray-600">
+          <p className="text-gray-400">
             Start discovering your next SaaS idea today
           </p>
         </div>
 
         {/* Signup Form */}
-        <Card className="border-0 shadow-lg">
+        <Card className="border-gray-800 bg-gray-900/50 backdrop-blur-sm">
           <CardHeader>
-            <CardTitle className="text-center">Sign Up</CardTitle>
-            <CardDescription className="text-center">
+            <CardTitle className="text-center text-white">Sign Up</CardTitle>
+            <CardDescription className="text-center text-gray-400">
               Create your account to access all features
             </CardDescription>
           </CardHeader>

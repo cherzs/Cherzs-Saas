@@ -38,7 +38,7 @@ class Settings(BaseSettings):
     BRIGHT_DATA_PASSWORD: Optional[str] = os.getenv("BRIGHT_DATA_PASSWORD")
     
     # CORS
-    CORS_ORIGINS: list = ["http://localhost:3000", "https://cherzs.vercel.app"]
+    CORS_ORIGINS: str = "http://localhost:3000"
     
     class Config:
         env_file = ".env"
