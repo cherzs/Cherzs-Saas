@@ -219,11 +219,11 @@ export default function HomePage() {
                 <li className="flex items-center">
                   <CheckIcon className="h-4 w-4 text-green-400 mr-2" />
                   Funding connections
-                </li>
+          </li>
                 <li className="flex items-center">
                   <CheckIcon className="h-4 w-4 text-green-400 mr-2" />
                   Growth tracking
-                </li>
+          </li>
               </ul>
             </div>
           </div>
