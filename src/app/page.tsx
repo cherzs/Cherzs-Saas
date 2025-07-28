@@ -23,11 +23,9 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <RocketLaunchIcon className="h-6 w-6 text-white" />
-              </div>
+              <img src="/favicon.ico" alt="Cherzs" className="h-10 w-10"/>
               <div>
-                <h1 className="text-2xl font-bold text-white">Cherzs SaaS</h1>
+                <h1 className="text-2xl font-bold text-white">Cherzs</h1>
                 <p className="text-xs text-gray-400">Ideas Marketplace</p>
               </div>
             </div>

@@ -36,12 +36,10 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
-              <RocketLaunchIcon className="h-6 w-6 text-white" />
-            </div>
+            <img src="/favicon.ico" alt="Cherzs" className="h-10 w-10"/>
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
-                Cherzs SaaS
+                Cherzs
               </h1>
               <p className="text-xs text-gray-400">Ideas Marketplace</p>
             </div>
