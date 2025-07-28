@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ENUMs for better type safety
+enum UserType {
+  DEVELOPER
+  REGULAR
+}
+
+enum SubscriptionTier {
+  FREE
+  PRO
+}
+
+// --- TABLES ---
+
+model User {
+  id               String           @id @default(cuid())
+  name             String?
+  email            String           @unique
+  emailVerified    DateTime?
+  hashedPassword   String?          // For credentials login
+  image            String?          // For social login
+  userType         UserType         @default(REGULAR)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  // Subscription details
+  subscriptionTier SubscriptionTier @default(FREE)
+  stripeCustomerId String?          @unique // To link user to Stripe customer
+  subEndDate       DateTime?        // To know when subscription expires
+
+  // Relations
+  ideas            Idea[]
+  accounts         Account[]
+  sessions         Session[]
+  favorites        Favorite[]
+}
+
+model Idea {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  screenshots String[] // Array of Cloudinary URLs
+  status      String   @default("published")
+  views       Int      @default(0)
+  likes       Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  // Relations
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String
+  favoritedBy Favorite[]
+}
+
+model Favorite {
+    id        String @id @default(cuid())
+    createdAt DateTime @default(now())
+
+    user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId    String
+    idea      Idea   @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+    ideaId    String
+
+    @@unique([userId, ideaId]) // A user can only favorite an idea once
+}
+
+// Models needed for NextAuth.js
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
