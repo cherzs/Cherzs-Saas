@@ -3,6 +3,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { 
+  MagnifyingGlassIcon, 
+  RocketLaunchIcon,
+  UserIcon,
+  LightBulbIcon
+} from "@heroicons/react/24/outline";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -43,10 +49,17 @@ export default function RegisterPage() {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleUserTypeChange = (userType: string) => {
+    setFormData({
+      ...formData,
+      userType,
     });
   };
 
@@ -116,21 +129,114 @@ export default function RegisterPage() {
                 onChange={handleChange}
               />
             </div>
+            
+            {/* User Type Toggle */}
             <div>
-              <label htmlFor="userType" className="block text-sm font-medium text-gray-300">
-                I am a
+              <label className="block text-sm font-medium text-gray-300 mb-4">
+                Choose your journey
               </label>
-              <select
-                id="userType"
-                name="userType"
-                required
-                className="mt-1 block w-full px-3 py-3 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-gray-800 text-white"
-                value={formData.userType}
-                onChange={handleChange}
-              >
-                <option value="REGULAR">Regular User (Browse ideas)</option>
-                <option value="DEVELOPER">Developer (Share ideas)</option>
-              </select>
+              <div className="grid grid-cols-2 gap-3">
+                {/* Regular User Option */}
+                <button
+                  type="button"
+                  onClick={() => handleUserTypeChange("REGULAR")}
+                  className={`relative p-4 rounded-xl border-2 transition-all duration-200 ${
+                    formData.userType === "REGULAR"
+                      ? "border-blue-500 bg-blue-500/10"
+                      : "border-gray-700 bg-gray-800/50 hover:border-gray-600"
+                  }`}
+                >
+                  <div className="flex flex-col items-center space-y-2">
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${
+                      formData.userType === "REGULAR"
+                        ? "bg-blue-500 text-white"
+                        : "bg-gray-700 text-gray-400"
+                    }`}>
+                      <MagnifyingGlassIcon className="h-6 w-6" />
+                    </div>
+                    <div className="text-center">
+                      <div className={`text-sm font-semibold transition-colors ${
+                        formData.userType === "REGULAR" ? "text-blue-400" : "text-gray-300"
+                      }`}>
+                        Regular User
+                      </div>
+                      <div className="text-xs text-gray-400 mt-1">
+                        Browse Ideas
+                      </div>
+                    </div>
+                  </div>
+                  {formData.userType === "REGULAR" && (
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+                      <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  )}
+                </button>
+
+                {/* Developer Option */}
+                <button
+                  type="button"
+                  onClick={() => handleUserTypeChange("DEVELOPER")}
+                  className={`relative p-4 rounded-xl border-2 transition-all duration-200 ${
+                    formData.userType === "DEVELOPER"
+                      ? "border-green-500 bg-green-500/10"
+                      : "border-gray-700 bg-gray-800/50 hover:border-gray-600"
+                  }`}
+                >
+                  <div className="flex flex-col items-center space-y-2">
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${
+                      formData.userType === "DEVELOPER"
+                        ? "bg-green-500 text-white"
+                        : "bg-gray-700 text-gray-400"
+                    }`}>
+                      <RocketLaunchIcon className="h-6 w-6" />
+                    </div>
+                    <div className="text-center">
+                      <div className={`text-sm font-semibold transition-colors ${
+                        formData.userType === "DEVELOPER" ? "text-green-400" : "text-gray-300"
+                      }`}>
+                        Developer
+                      </div>
+                      <div className="text-xs text-gray-400 mt-1">
+                        Share Ideas
+                      </div>
+                    </div>
+                  </div>
+                  {formData.userType === "DEVELOPER" && (
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                      <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  )}
+                </button>
+              </div>
+              
+              {/* Description for selected type */}
+              <div className="mt-3 p-3 bg-gray-800/30 rounded-lg border border-gray-700">
+                {formData.userType === "REGULAR" ? (
+                  <div className="flex items-start space-x-3">
+                    <UserIcon className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="text-sm text-blue-400 font-medium">Regular User</p>
+                      <p className="text-xs text-gray-400 mt-1">
+                        Perfect for exploring innovative SaaS ideas, saving favorites, and discovering new solutions.
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-start space-x-3">
+                    <LightBulbIcon className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="text-sm text-green-400 font-medium">Developer</p>
+                      <p className="text-xs text-gray-400 mt-1">
+                        Share your SaaS ideas, get feedback from the community, and connect with potential collaborators.
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 

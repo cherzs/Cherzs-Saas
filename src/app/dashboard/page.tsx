@@ -3,20 +3,17 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Navbar from "@/components/Navbar";
 import { signOut } from "next-auth/react";
-import { 
-  PlusIcon, 
-  ChartBarIcon, 
-  UserIcon, 
-  CogIcon,
+import {
+  RocketLaunchIcon,
+  PlusIcon,
   EyeIcon,
   HeartIcon,
-  ArrowTrendingUpIcon,
-  FireIcon,
+  ChartBarIcon,
   LightBulbIcon,
-  SparklesIcon,
-  RocketLaunchIcon,
-  ClockIcon
+  ArrowRightIcon
 } from "@heroicons/react/24/outline";
 
 interface Idea {
@@ -47,11 +44,6 @@ export default function DashboardPage() {
     
     if (!session) {
       router.push("/login");
-      return;
-    }
-
-    if (session.user.userType !== "DEVELOPER") {
-      router.push("/browse");
       return;
     }
 
@@ -119,36 +111,31 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gray-900">
-      {/* Header */}
-      <header className="bg-gray-800 border-b border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
+      <Navbar />
+      
+      {/* Dashboard Header */}
+      <div className="bg-gray-800/50 border-b border-gray-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <RocketLaunchIcon className="h-6 w-6 text-white" />
+              <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-600 rounded-xl flex items-center justify-center">
+                <ChartBarIcon className="h-7 w-7 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-white">Dashboard</h1>
-                <p className="text-sm text-gray-400">Manage your SaaS ideas</p>
+                <h1 className="text-3xl font-bold text-white">Developer Dashboard</h1>
+                <p className="text-gray-400">Manage and track your SaaS ideas</p>
               </div>
             </div>
-            <div className="flex items-center space-x-6">
-              <div className="text-right">
-                <p className="text-sm text-gray-400">Welcome back,</p>
-                <p className="text-white font-medium">{session.user.name}</p>
-              </div>
-              <button
-                onClick={() => signOut()}
-                className="text-gray-400 hover:text-white text-sm transition-colors px-3 py-2 rounded-md hover:bg-gray-700"
-              >
-                Sign Out
-              </button>
+            <div className="text-right">
+              <p className="text-sm text-gray-400">Welcome back,</p>
+              <p className="text-white font-medium">{session.user.name}</p>
             </div>
           </div>
         </div>
-      </header>
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
         {/* Welcome Banner */}
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-6 mb-8 text-white">
           <div className="flex items-center justify-between">
@@ -211,7 +198,7 @@ export default function DashboardPage() {
                 <div className="absolute top-0 right-0 w-20 h-20 bg-orange-600/10 rounded-full -translate-y-10 translate-x-10"></div>
                 <div className="relative">
                   <div className="flex items-center justify-between mb-2">
-                    <ArrowTrendingUpIcon className="h-6 w-6 text-orange-400" />
+                    <ArrowRightIcon className="h-6 w-6 text-orange-400" />
                     <span className="text-xs text-gray-400 bg-gray-700 px-2 py-1 rounded">Rate</span>
                   </div>
                   <h3 className="text-2xl font-bold text-white">{avgEngagement}%</h3>
@@ -225,7 +212,7 @@ export default function DashboardPage() {
               <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 mb-8">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center">
-                    <SparklesIcon className="h-6 w-6 text-blue-400 mr-3" />
+                    <RocketLaunchIcon className="h-6 w-6 text-blue-400 mr-3" />
                     <h2 className="text-xl font-semibold text-white">Share New Idea</h2>
                   </div>
                   <button
@@ -299,7 +286,7 @@ export default function DashboardPage() {
             <div className="bg-gray-800 border border-gray-700 rounded-xl p-6">
               <div className="flex justify-between items-center mb-6">
                 <div className="flex items-center">
-                  <FireIcon className="h-6 w-6 text-orange-400 mr-3" />
+                  <RocketLaunchIcon className="h-6 w-6 text-orange-400 mr-3" />
                   <h2 className="text-xl font-semibold text-white">My Ideas</h2>
                 </div>
                 {!showUploadForm && (
@@ -338,7 +325,7 @@ export default function DashboardPage() {
                     onClick={() => setShowUploadForm(true)}
                     className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors inline-flex items-center"
                   >
-                    <SparklesIcon className="mr-2 h-5 w-5" />
+                    <RocketLaunchIcon className="mr-2 h-5 w-5" />
                     Share Your First Idea
                   </button>
                 </div>
@@ -356,7 +343,7 @@ export default function DashboardPage() {
                           </p>
                         </div>
                         <div className="flex items-center text-xs text-gray-400 ml-4">
-                          <ClockIcon className="h-4 w-4 mr-1" />
+                          <RocketLaunchIcon className="h-4 w-4 mr-1" />
                           {new Date(idea.createdAt).toLocaleDateString()}
                         </div>
                       </div>
@@ -372,7 +359,7 @@ export default function DashboardPage() {
                             <span>{idea.likes}</span>
                           </div>
                           <div className="flex items-center text-green-400">
-                            <ArrowTrendingUpIcon className="h-4 w-4 mr-1" />
+                            <ArrowRightIcon className="h-4 w-4 mr-1" />
                             <span>{idea.views > 0 ? ((idea.likes / idea.views) * 100).toFixed(1) : 0}%</span>
                           </div>
                         </div>
@@ -411,14 +398,14 @@ export default function DashboardPage() {
                   href="#"
                   className="flex items-center px-4 py-3 text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg transition-colors"
                 >
-                  <UserIcon className="mr-3 h-5 w-5" />
+                  <RocketLaunchIcon className="mr-3 h-5 w-5" />
                   Profile
                 </a>
                 <a
                   href="#"
                   className="flex items-center px-4 py-3 text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg transition-colors"
                 >
-                  <CogIcon className="mr-3 h-5 w-5" />
+                  <RocketLaunchIcon className="mr-3 h-5 w-5" />
                   Settings
                 </a>
               </nav>
