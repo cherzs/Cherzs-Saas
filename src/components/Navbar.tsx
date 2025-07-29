@@ -36,10 +36,10 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <img src="/favicon.ico" alt="Cherzs" className="h-10 w-10"/>
+            <img src="/favicon.ico" alt="Xherzs" className="h-10 w-10"/>
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
-                Cherzs
+                Xherzs
               </h1>
               <p className="text-xs text-gray-400">Ideas Marketplace</p>
             </div>
@@ -64,7 +64,7 @@ export default function Navbar() {
                     <span>Browse Ideas</span>
                   </Link>
 
-                  {/* Developer Mode Button */}
+                  {/* Creator Mode Button */}
                   <Link
                     href="/dashboard"
                     className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-all ${
@@ -83,13 +83,13 @@ export default function Navbar() {
                   <div className="flex items-center space-x-2">
                     <ArrowsRightLeftIcon className="h-4 w-4 text-gray-400" />
                     <span className="text-xs text-gray-400">
-                      {isDeveloperMode ? "Developer Mode" : "Browse Mode"}
+                      {isDeveloperMode ? "Creator Mode" : "Browse Mode"}
                     </span>
                   </div>
                 )}
 
                 {/* Secondary Navigation based on current mode */}
-                {isBrowseMode && session.user.userType === "REGULAR" && (
+                {isBrowseMode && (
                   <Link
                     href="/favorites"
                     className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
@@ -112,7 +112,7 @@ export default function Navbar() {
                     <div className="hidden lg:block">
                       <p className="text-sm font-medium text-white">{session.user.name}</p>
                       <p className="text-xs text-gray-400">
-                        {isDeveloperMode ? "🛠️ Developer" : "👤 Explorer"}
+                        {isDeveloperMode ? "🛠️ Creator" : "👤 Explorer"}
                       </p>
                     </div>
                   </div>
@@ -229,7 +229,7 @@ export default function Navbar() {
                       <div>
                         <p className="text-sm font-medium text-white">{session.user.name}</p>
                         <p className="text-xs text-gray-400">
-                          {isDeveloperMode ? "🛠️ Developer Mode" : "👤 Browse Mode"}
+                          {isDeveloperMode ? "🛠️ Creator Mode" : "👤 Browse Mode"}
                         </p>
                       </div>
                     </div>

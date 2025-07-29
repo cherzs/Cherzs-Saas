@@ -401,7 +401,7 @@ export default function BrowsePage() {
                   {/* Header */}
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex-1">
-                      <Link href={`/ideas/${idea.id}`}>
+                      <Link href={`/ideas/${idea.id}?from=browse`}>
                         <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-blue-400 transition-colors cursor-pointer line-clamp-2">
                           {idea.title}
                         </h3>
@@ -437,6 +437,32 @@ export default function BrowsePage() {
                   <p className="text-gray-300 text-sm mb-4 line-clamp-3 leading-relaxed">
                     {idea.description}
                   </p>
+                  
+                  {/* Screenshots Preview */}
+                  {idea.screenshots && idea.screenshots.length > 0 && (
+                    <div className="mb-4">
+                      <div className="flex space-x-2 overflow-x-auto">
+                        {idea.screenshots.slice(0, 3).map((screenshot, index) => (
+                          <div key={index} className="flex-shrink-0 w-16 h-16 bg-gray-600 rounded-lg flex items-center justify-center overflow-hidden">
+                            {screenshot.startsWith('data:') ? (
+                              <img 
+                                src={screenshot} 
+                                alt={`Screenshot ${index + 1}`}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <span className="text-gray-400 text-xs">📷</span>
+                            )}
+                          </div>
+                        ))}
+                        {idea.screenshots.length > 3 && (
+                          <div className="flex-shrink-0 w-16 h-16 bg-gray-600 rounded-lg flex items-center justify-center">
+                            <span className="text-gray-400 text-xs">+{idea.screenshots.length - 3}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
                   
                   {/* Metrics */}
                   <div className="flex items-center justify-between text-sm">

@@ -38,6 +38,16 @@ model User {
   createdAt        DateTime         @default(now())
   updatedAt        DateTime         @updatedAt
 
+  // Profile information
+  phone            String?
+  website          String?
+  location         String?
+  bio              String?          @db.Text
+  linkedin         String?
+  twitter          String?
+  github           String?
+  isPublic         Boolean          @default(true)
+
   // Subscription details
   subscriptionTier SubscriptionTier @default(FREE)
   stripeCustomerId String?          @unique // To link user to Stripe customer

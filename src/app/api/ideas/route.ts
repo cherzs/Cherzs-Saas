@@ -15,8 +15,8 @@ export async function GET(request: NextRequest) {
     const where = search
       ? {
           OR: [
-            { title: { contains: search, mode: "insensitive" } },
-            { description: { contains: search, mode: "insensitive" } },
+            { title: { contains: search, mode: "insensitive" as const } },
+            { description: { contains: search, mode: "insensitive" as const } },
           ],
         }
       : {};
@@ -81,15 +81,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if user is a developer
+    // All authenticated users can create ideas
     const user = await prisma.user.findUnique({
       where: { id: session.user.id },
     });
 
-    if (user?.userType !== "DEVELOPER") {
+    if (!user) {
       return NextResponse.json(
-        { error: "Only developers can create ideas" },
-        { status: 403 }
+        { error: "User not found" },
+        { status: 404 }
       );
     }
 

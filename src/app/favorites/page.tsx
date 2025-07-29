@@ -188,7 +188,7 @@ export default function FavoritesPage() {
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex-1">
-                      <Link href={`/ideas/${idea.id}`}>
+                      <Link href={`/ideas/${idea.id}?from=favorites`}>
                         <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-blue-400 transition-colors cursor-pointer">
                           {idea.title}
                         </h3>

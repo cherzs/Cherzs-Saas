@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Cherzs SaaS - Where Great Ideas Come to Life",
+  title: "Xherzs SaaS - Where Great Ideas Come to Life",
   description: "Discover, share, and fund the next generation of SaaS innovations",
 };
 

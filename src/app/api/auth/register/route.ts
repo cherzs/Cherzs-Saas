@@ -5,9 +5,9 @@ import { prisma } from "@/lib/prisma";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email, password, name, userType } = body;
+    const { email, password, name, userType, confirmPassword } = body;
 
-    if (!email || !password || !name || !userType) {
+    if (!email || !password || !name || !userType || !confirmPassword) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -25,6 +25,14 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    if (password !== confirmPassword) {
+      return NextResponse.json(
+        { error: "Passwords do not match" },
+        { status: 400 }
+      );
+    }
+    
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 12);

@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-// POST /api/ideas/[id]/favorite - Favorite/unfavorite an idea
+// POST /api/ideas/[id]/like - Like/unlike an idea
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -19,8 +19,8 @@ export async function POST(
       );
     }
 
-    // Check if user already favorited this idea
-    const existingFavorite = await prisma.favorite.findUnique({
+    // Check if user already liked this idea
+    const existingLike = await prisma.favorite.findUnique({
       where: {
         userId_ideaId: {
           userId: session.user.id,
@@ -29,8 +29,8 @@ export async function POST(
       },
     });
 
-    if (existingFavorite) {
-      // Remove from favorites
+    if (existingLike) {
+      // Unlike the idea
       await prisma.favorite.delete({
         where: {
           userId_ideaId: {
@@ -40,9 +40,15 @@ export async function POST(
         },
       });
 
-      return NextResponse.json({ favorited: false });
+      // Decrease like count
+      await prisma.idea.update({
+        where: { id: id },
+        data: { likes: { decrement: 1 } },
+      });
+
+      return NextResponse.json({ liked: false });
     } else {
-      // Add to favorites
+      // Like the idea
       await prisma.favorite.create({
         data: {
           userId: session.user.id,
@@ -50,10 +56,16 @@ export async function POST(
         },
       });
 
-      return NextResponse.json({ favorited: true });
+      // Increase like count
+      await prisma.idea.update({
+        where: { id: id },
+        data: { likes: { increment: 1 } },
+      });
+
+      return NextResponse.json({ liked: true });
     }
   } catch (error) {
-    console.error("Error favoriting idea:", error);
+    console.error("Error liking idea:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

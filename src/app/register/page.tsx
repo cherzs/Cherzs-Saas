@@ -15,6 +15,7 @@ export default function RegisterPage() {
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",
     userType: "REGULAR"
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -47,6 +48,12 @@ export default function RegisterPage() {
     } finally {
       setIsLoading(false);
     }
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      setIsLoading(false);
+      return;
+    }
+    
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,7 +134,7 @@ export default function RegisterPage() {
                 placeholder="Password"
                 value={formData.password}
                 onChange={handleChange}
-              />
+              />             
             </div>
             
             {/* User Type Toggle */}
